@@ -1,0 +1,11 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+    .global-bg-gradient {
+      @apply bg-gradient-to-br from-[#0f172a] to-[#1e293b];
+    }
+  }
+  
