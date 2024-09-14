@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { ToastContainer,toast } from 'react-toastify';
 const JobDetails = () => {
     const {id} = useParams();
     const [job,setJob] = useState({});
     const [hasApplied,sethasApplied] = useState(false);
+    const user = useSelector((state)=>state?.user?.user)
     const applyJobs = async()=>{
+     
+      console.log(user.profile)
+      if(Object.keys(user).length === 0){
+        toast.error("You are not logged in")
+        return;
+      }
+      if(user?.profile?.resume === ""){
+        toast.error("Your resume is not present")
+        return;
+      }
+      if(user?.role !== student){
+        toast.error("Log in as Student to apply")
+        return;
+      }
         try {
             const response = await fetch(`http://localhost:3000/application/apply/${id}`,{
                 method:"GET",
@@ -96,7 +112,7 @@ const JobDetails = () => {
           </div>
           <ToastContainer
 position="top-right"
-autoClose={4000}
+autoClose={2000}
 hideProgressBar={false}
 newestOnTop={false}
 closeOnClick

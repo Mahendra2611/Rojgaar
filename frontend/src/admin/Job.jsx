@@ -5,29 +5,33 @@ import { useSelector,useDispatch } from 'react-redux';
 import { toggleLoader } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
-import { addJob } from '../redux/JobSlice';
+import { addJob ,deleteJobb} from '../redux/JobSlice';
+import { toast } from 'react-toastify';
+import DeleteConfirmation from './DeleteConfirmation';
+import { CustomButtonGreen } from '../components/CustomButton';
+
 const Job = () => {
     const [inp,setInp] = useState("");
     const navigate = useNavigate();
-    const loader = useSelector((state)=>state.user.loader)
+    const loader = useSelector((state)=>state?.user?.loader)
     const dispatch = useDispatch();
     let jobData = useSelector((state)=>state?.job?.job||[])
-    console.log(jobData)
+    const [isModal,setisModal] = useState(false);
+    const [jobToDelete,setJobtoDelete] = useState({});
+    //console.log(jobData)
 const handleClick = ()=>{
 navigate("/job/create")
 }
     const filterData = useMemo(()=>{
-      return jobData.length>0 && jobData.filter((job)=>(job?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "")
+      return jobData?.length>0 && jobData?.filter((job)=>(job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))||job?.title?.toLowerCase().includes(inp?.toLowerCase())|| inp?.trim() === "")
     },[inp,jobData])
 console.log(filterData)
     function debounce(func,time){
         let timeOutId;
-       // console.log("debounced called")
+      
         return (...args)=>{
              clearTimeout(timeOutId)
             timeOutId = setTimeout(()=>{
-              //console.log("time out called")
-              //console.log(...args)
                func(...args)
             },time)
         }
@@ -36,56 +40,98 @@ console.log(filterData)
     const handleChange = debounce((value)=>{
       setInp(value);
     },500);
-    //console.log(handleChange)
+    
     async function getData() {
       try {
         dispatch(toggleLoader(true));
          
-        const response = await fetch(`http://localhost:3000/getadminjobs`, {
+        const response = await fetch(`http://localhost:3000/job/getadminjobs`, {
             method: "GET",
             credentials: "include",
             headers:{
               "Content-Type":"application/json"
             }
         });
-
+        const data = await response.json();
         if (response.ok) {
-          const data = await response.json();
-          console.log(data.job)
-            dispatch(addJob(data.job))
+            dispatch(addJob(data?.jobs))
             console.log("Data received successfully");
            
         } else {
-            console.log("Data couldn't be sent successfully");
+            toast.error(data.message)
         }
       } catch (error) {
-        console.log(error)
+        toast.error("Something went wrong !!!")
       }
       finally{
         dispatch(toggleLoader(false));
          
       }
     }
+    const deleteJob = async(id,index) => {
+     
+      try {
+         const response = await fetch(`http://localhost:3000/job/deletejob/${id}`,{
+             method:"DELETE",
+             credentials:"include"
+         })
+         if(response.ok){
+          dispatch(deleteJobb(index));
+         }
+         else{
+          toast.error("Job deletion failed")
+         }
+      } catch (error) {
+        toast.error("something went wrong")
+      }
+     }
+     const confirmDelete = (id,index)=>{
+      setJobtoDelete({id,index})
+      setisModal(true);
+     }
+     const handleModalConfirm = ()=>{
+      deleteJob(jobToDelete.id,jobToDelete.index)
+      handleModalClose();
+     }
+     const handleModalClose = ()=>{
+      setisModal(false);
+     }
     useEffect(()=>{
-      getData();
+      if(jobData?.length === 0){
+        getData();
+      }
     },[])
   return loader?<Loader/>:(
     <div className='space-y-5'>
-      <div className='flex justify-between items-center px-10'>
-       <input 
-       type='text'
-       placeholder='search by name'
-       className='px-4 py-2 text-[16px]'
-       onChange={(e)=>{
-        handleChange(e.target.value)
-      console.log(e.target.value)
-      }}
-       />
-       <button onClick={handleClick} className='px-4 py-2 text-[16px] text-white bg-green-400'>New Job</button>
+    <div className='flex justify-between gap-3 items-center px-4 md:px-10 text-white'>
+     
+      <div className='flex-1 max-w-52'>
+        <input 
+          type='text'
+          placeholder='Search by name or role'
+          className='w-full px-1 md:px-3 py-1 md:py-2 text-[12px] md:text-[16px] rounded-lg'
+          onChange={(e) => {
+            handleChange(e.target.value);
+          }}
+        />
       </div>
-      <JobTable job={filterData}/>
       
+      {/* Button div */}
+      <div className='flex-1 flex justify-end '>
+        <CustomButtonGreen onClick={handleClick}>Create New Job</CustomButtonGreen>
+      </div>
     </div>
+    
+    <JobTable job={filterData} deleteJob={confirmDelete} />
+  
+    {isModal && (
+      <DeleteConfirmation 
+        onClose={handleModalClose}
+        onConfirm={handleModalConfirm} 
+      />
+    )}
+  </div>
+  
   )
 }
 

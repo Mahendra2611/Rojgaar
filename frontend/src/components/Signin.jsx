@@ -58,17 +58,24 @@ const Signin = () => {
         const data = await response.json();
         console.log(data);
         if(data.success){
-          toast.success(data.message)
+         
           sessionStorage.clear();
           disptach(addUser(data.user));
-          navigate("/")
+          if(data.user.role === "recruiter"){
+            navigate("/admin/home")
+          }
+          else{
+            navigate("/")
+          }
         }
         else{
           toast.error(data.message)
+          sessionStorage.clear();
         }
         } catch (error) {
           console.log(error);
           toast.error("Someting went wrong")
+          sessionStorage.clear();
         }
         finally{
           disptach(toggleLoader(false))

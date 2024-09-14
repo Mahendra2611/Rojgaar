@@ -10,7 +10,7 @@ const UserJob = () => {
     const jobsData = useSelector((state)=>state.job.job);
     const [inp,setInp] = useState(filter||"");
     const filterData = useMemo(()=>{
-        return jobsData.length>0 && jobsData.filter((job)=>((job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "" || (job?.title?.toLowerCase().includes(inp?.toLowerCase()))))
+        return jobsData?.length>0 && jobsData?.filter((job)=>((job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "" || (job?.title?.toLowerCase().includes(inp?.toLowerCase()))))
       },[inp,jobsData])
   console.log(filterData)
       function debounce(func,time){
@@ -45,12 +45,12 @@ const UserJob = () => {
     }
     useEffect(()=>{
       
-       if(jobsData.length === 0){
+       if(jobsData?.length === 0){
         getJobs();
        }
        
     },[])
-  return filterData.length==0?(<NotFound/>):(
+  return filterData?.length==0?(<NotFound/>):(
     <div className='space-y-5'>
     <div className='flex justify-between items-center px-10'>
        <input 

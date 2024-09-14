@@ -6,6 +6,7 @@ export default {
   ],
   theme: {
     extend: {
+      
       colors:{
         primaryText:"#33333",
         primaryHeading:"#111111"

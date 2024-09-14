@@ -9,15 +9,31 @@ const AllJobs = () => {
     const dispatch = useDispatch();
     const {filter} = useParams();
     const jobsData = useSelector((state)=>state.job.job);
-    const [inp,setInp] = useState({
-        
-    });
-
-   
-    
-    const filterData = useMemo(()=>{
-        return jobsData.length>0 && jobsData.filter((job)=>((job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "" || (job?.title?.toLowerCase().includes(inp?.toLowerCase()))))
-      },[inp,jobsData])
+const filterValue = useSelector((state)=>state.job.filter)
+console.log(filterValue)
+   //console.log(jobsData)
+    let filterData;
+    useMemo(() => {
+      if (filterValue.length === 0) {
+        filterData = jobsData;
+        return;
+      }
+  
+      const locationFilters = filterValue.filter(f => ["delhi", "noida", "gurgaon", "bengluru", "hyderabad", "other"].includes(f));
+      const industryFilters = filterValue.filter(f => ["frontend developer", "backend developer", "full stack developer", "Data Science", "Next js", "Others"].includes(f));
+     
+      const jobTypeFilters = filterValue.filter(f => ["full time", "internship"].includes(f));
+  console.log(locationFilters)
+  console.log(industryFilters)
+      filterData = jobsData.filter((job) => {
+        const locationMatch = locationFilters.length === 0 || locationFilters.includes(job.location.toLowerCase());
+        const industryMatch = industryFilters.length === 0 || industryFilters.includes(job.title.toLowerCase());
+       
+        const jobTypeMatch = jobTypeFilters.length === 0 || jobTypeFilters.includes(job.jobType.toLowerCase());
+  
+        return locationMatch && industryMatch && salaryMatch && jobTypeMatch;
+      });
+    }, [jobsData, filterValue]);
   console.log(filterData)
       function debounce(func,time){
           let timeOutId;

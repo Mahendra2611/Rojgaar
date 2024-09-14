@@ -61,16 +61,22 @@ export const login = async (req, res) => {
             message: "Input fiels are not correct",
         })
     }
-    const { email, password} = req.body;
+    const { email, password,role} = req.body;
     try {
         const user = await User.findOne({ email });
         console.log(user)
-        if (!user) {
+        if (user.email !== email) {
             return res.status(400).json({
                 message: "Incorrect Email",
                 success: false
             })
         }
+        if (user.role !== role) {
+          return res.status(400).json({
+              message: "Incorrect Role",
+              success: false
+          })
+      }
         const hashPassword = user.password
         const verfiy = await bcrypt.compare(password, hashPassword)
         if (!verfiy) {
@@ -88,6 +94,7 @@ export const login = async (req, res) => {
         const jwtToken = jwt.sign({
             user: {
                 userId: user._id,
+                userRole:user.role,
             }
         },
             process.env.JWT_SECRET_KEY)
@@ -113,14 +120,16 @@ export const login = async (req, res) => {
 }
 export const logout = (req, res) => {
     try {
-       // res.cookie('access-key', "", { maxAge: 0 });
+        res.cookie('access-key', "", { maxAge: 0 });
         res.status(200).json({
-            message: "User log out successfully"
+            message: "User log out successfully",
+            success:true
         })
     } catch (error) {
         console.log(error)
         return res.status(400).json({
-            message: "user log out failed"
+            message: "user log out failed",
+          
         })
     }
 }
@@ -131,7 +140,7 @@ export const updateProfile = async (req, res) => {
       const { fullName, phoneNumber, bio, skills } = req.body;
   
       if (!fullName || !phoneNumber ) {
-        return res.status(400).json({
+        return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
           message: 'Input fields are not correct',
         });
       }
@@ -153,36 +162,30 @@ export const updateProfile = async (req, res) => {
       if(skills){
         DataToBeUpdated["profile.skills"] = skills
       }
-      // Create an array to hold the promises for uploading files
+      
       const uploadPromises = [];
   
-      // Handle optional profile photo upload
+     
       if (req.files.profilePhoto) {
         const photoUploadPromise = new Promise((resolve, reject) => {
           const profilePhotoPath = req.files.profilePhoto[0].path;
-          resolve(profilePhotoPath); // Resolving the photo path after upload
+          resolve(profilePhotoPath); 
         });
   
-        // Add the photo upload promise to the array
         uploadPromises.push(photoUploadPromise);
       }
   
-      // Handle optional resume upload
+     
       if (req.files.resume) {
         const resumeUploadPromise = new Promise((resolve, reject) => {
           const resumePath = req.files.resume[0].path;
           const resumeOriginalName = req.files.resume[0].originalname;
-          resolve({ resumePath, resumeOriginalName }); // Resolving the resume path and name after upload
+          resolve({ resumePath, resumeOriginalName }); 
         });
-  
-        // Add the resume upload promise to the array
         uploadPromises.push(resumeUploadPromise);
       }
-  
-      // Wait for all uploads to complete
       const uploadResults = await Promise.all(uploadPromises);
   
-      // Update the DataToBeUpdated object with the paths from Cloudinary
       uploadResults.forEach((result, index) => {
         if (index === 0 && req.files.profilePhoto) {
           DataToBeUpdated["profile.profilePhoto"] = result;
@@ -192,21 +195,19 @@ export const updateProfile = async (req, res) => {
         }
       });
   
-      const id = req.userId; // Assuming you're getting user ID from the token
-  console.log(DataToBeUpdated)
+      const id = req.userId;
       await User.updateOne({ _id: id }, {$set:DataToBeUpdated});
       const updatedUser = await User.findOne({ _id: id }, { _id:0,password: 0 });
-      console.log("update data")
-  console.log(updatedUser)
-      res.status(200).json({
+      res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
         message: 'User updated successfully',
         success: true,
         user:updatedUser,
       });
     } catch (error) {
       console.log(error);
-      res.status(400).json({
+      res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
         message: 'Internal server error',
+        success:false,
       });
     }
   };

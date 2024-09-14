@@ -5,6 +5,8 @@ import { toggleLoader } from '../redux/userSlice';
 import { addCompany } from '../redux/companySlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
+import { CustomButtonBlue } from '../components/CustomButton';
+import CallApi from './CallApi';
 
 const CompanyCreate = () => {
    const [logo,setLogo] = useState();
@@ -55,88 +57,98 @@ const navigate = useNavigate();
                 credentials: "include",
                 body: formData
             });
-
+            const data = await response.json();
             if (response.ok) {
-              const data = await response.json();
+             
               console.log(data)
                
                 console.log("Data received successfully");
                 navigate("/company")
             } else {
+              toast.error(data?.message||"company registration failed")
                 console.log("Data couldn't be sent successfully");
             }
         } catch (error) {
+          toast.error("Company Registeration Failed")
             console.log(error);
         }
         finally{
           dispatch(toggleLoader(false));
+          CallApi()
         }
     };
     
       return loader ? <Loader/>:(
         
-        <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold mb-6">Register Company</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-700">Logo URL</label>
-              <input
-                type="file"
-                name="logo"
-              
-                onChange={handleFileChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Name</label>
-              <input
-                type="text"
-                name="name"
-               
-                ref={company.name}
-                
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Website</label>
-              <input
-                type="text"
-                name="webiste"
-               ref={company.website}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Description</label>
-              <input
-                type="text"
-                name="description"
-               ref={company.description}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Location</label>
-              <input
-                type="text"
-                name="location"
-               ref={company.location}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-           
-            <button
-              type="submit"
-              className="w-full p-2 bg-blue-500 text-white rounded"
-            >
-              Register Company
-            </button>
-          </form>
+        <div className="p-6 max-w-lg mx-auto bg-[#0f172a] rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold mb-6 text-white ">Register Company</h2>
+          <form onSubmit={handleSubmit} className="space-y-4 text-white">
+  <div>
+    <label className="block text-xs md:text-[16px]  text-lime-500">Logo URL</label>
+    <input
+      type="file"
+      name="logo"
+      onChange={handleFileChange}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+     <p className='text-red-500 text-[10px] md:text-xs'>*file size should be less then 500KB</p>
+  </div>
+
+  <div>
+    <label className="block text-xs md:text-[16px]   text-lime-500">Name</label>
+    <input
+      type="text"
+      name="name"
+      ref={company.name}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+     <p className='text-red-500 text-[10px] md:text-xs'>*mandatory</p>
+  </div>
+
+  <div>
+    <label className="block text-xs md:text-[16px]  text-lime-500">Website</label>
+    <input
+      type="text"
+      name="website"
+      ref={company.website}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+     <p className='text-red-500 text-[10px] md:text-xs'>*mandatory</p>
+  </div>
+
+  <div>
+    <label className="block text-xs md:text-[16px]  text-lime-500">Description</label>
+    <input
+      type="text"
+      name="description"
+      ref={company.description}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+     <p className='text-red-500 text-[10px] md:text-xs'>*mandatory</p>
+  </div>
+
+  <div>
+    <label className="block text-xs md:text-[16px]  text-lime-500">Location</label>
+    <input
+      type="text"
+      name="location"
+      ref={company.location}
+      className="w-full h-8 md:h-10 p-2 text-xs md:text-[16px] my-1 border rounded bg-[#213155] text-white"
+    />
+     <p className='text-red-500 text-[10px] md:text-xs '>*mandatory</p>
+  </div>
+
+  <button
+    type="submit"
+   
+  >
+    <CustomButtonBlue>Register Company</CustomButtonBlue>
+  </button>
+</form>
+
           <ToastContainer
 position="top-right"
-autoClose={4000}
+autoClose={2000}
 hideProgressBar={false}
 newestOnTop={false}
 closeOnClick

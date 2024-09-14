@@ -5,9 +5,14 @@ import { useSelector,useDispatch } from 'react-redux';
 import { toggleLoader } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
-import { addCompany } from '../redux/companySlice';
+import { addCompany ,deleteComanyy} from '../redux/companySlice';
+import DeleteConfirmation from './DeleteConfirmation';
+import { ToastContainer,toast } from 'react-toastify';
+import { CustomButtonGreen } from '../components/CustomButton';
 const Companies = () => {
     const [inp,setInp] = useState("");
+    const [isModal,setisModal] = useState(false);
+    const [companyToDelete,setCompanytoDelete] = useState({});
     const navigate = useNavigate();
     const loader = useSelector((state)=>state.user.loader)
     const dispatch = useDispatch();
@@ -64,25 +69,77 @@ console.log(filterData)
          
       }
     }
+    const deleteCompany = async(id,index) => {
+      console.log(id)
+      console.log(index)
+      try {
+         const response = await fetch(`http://localhost:3000/company/deletecompany/${id}`,{
+             method:"DELETE",
+             credentials:"include"
+         })
+         if(response.status === 200){
+          //toast.success("job deleted successfully")
+          dispatch(deleteComanyy(index));
+         }
+         else{
+          toast.error("Company deletion failed")
+         }
+      } catch (error) {
+        toast.error("something went wrong")
+      }
+     }
+     const confirmDelete = (id,index)=>{
+      setCompanytoDelete({id,index})
+      setisModal(true);
+     }
+     const handleModalConfirm = ()=>{
+      deleteCompany(companyToDelete.id,companyToDelete.index)
+      handleModalClose();
+     }
+     const handleModalClose = ()=>{
+      setisModal(false);
+     }
     useEffect(()=>{
-      getData();
+      if(companiesData?.length === 0){
+        getData();
+      }
     },[])
   return loader?<Loader/>:(
     <div className='space-y-5'>
-      <div className='flex justify-between items-center px-10'>
+      <div className='flex justify-between gap-3 items-center px-4 md:px-10 text-white'>
+     
+     <div className='flex-1 max-w-52'>
        <input 
-       type='text'
-       placeholder='search by name'
-       className='px-4 py-2 text-[16px]'
-       onChange={(e)=>{
-        handleChange(e.target.value)
-      console.log(e.target.value)
-      }}
+         type='text'
+         placeholder='Search by name or role'
+         className='w-full px-1 md:px-3 py-1 md:py-2 text-[12px] md:text-[16px] rounded-lg'
+         onChange={(e) => {
+           handleChange(e.target.value);
+         }}
        />
-       <button onClick={handleClick} className='px-4 py-2 text-[16px] text-white bg-green-400'>New Company</button>
+     </div>
+     
+     {/* Button div */}
+     <div className='flex-1 flex justify-end '>
+       <CustomButtonGreen onClick={handleClick}>Create New Company</CustomButtonGreen>
+     </div>
       </div>
-      <CompanyTable companies={filterData}/>
-      
+      <CompanyTable companies={filterData} deleteCompnay={confirmDelete}/>
+      {isModal && <DeleteConfirmation onClose={handleModalClose}
+          onConfirm={handleModalConfirm}/>}
+           <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover={false}
+theme="light"
+
+/>
     </div>
   )
 }

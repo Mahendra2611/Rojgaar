@@ -8,7 +8,7 @@ const AdminProtected = ({children}) => {
     const navigate = useNavigate();
     useEffect(()=>{
         if(user == null || user.role !== 'recruiter'){
-            navigate("/error")
+            navigate("/")
         }
     },[])
   return (

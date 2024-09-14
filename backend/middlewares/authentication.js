@@ -23,6 +23,7 @@ const authentication = (req,res,next)=>{
             }
             console.log(decoded);
             req.userId = decoded.user.userId;
+            req.userRole = decoded.user.userRole
             
         })
         next();

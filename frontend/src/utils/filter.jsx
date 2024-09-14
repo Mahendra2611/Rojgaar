@@ -2,18 +2,17 @@ export const filter = [
     {
         name:"Location",
         options:["Delhi","Noida","Gurgaon","Bengluru","Hyderabad","Other"],
+        id:0.
         
     },
     {
         name:"Industry",
-        options:["FrontEnd Developer","Backend Developer","Full Stack Developer","Data Science","Next js","Others"]
-    },
-    {
-        name:"Salary",
-        options:["0-40K","41K-1Lac","1Lac-2Lac","More then 2 Lac"]
+        options:["FrontEnd Developer","Backend Developer","Full Stack Developer","Data Science","Next js","Others"],
+        id:1,
     },
     {
         name:"JobType",
-        options:["Full Time","Internship"]
+        options:["Full Time","Internship"],
+        id:3,
     },
 ]

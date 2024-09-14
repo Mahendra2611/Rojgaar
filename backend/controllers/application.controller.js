@@ -6,6 +6,13 @@ export const applyJob = async (req, res) => {
     try {
         console.log("apply job called")
         const userId = req.userId;
+        const role = req.userRole;
+        if(role !== "student"){
+            return res.status(400).json({
+                message: "Log in as student",
+                success: false
+            })
+        }
         const jobId = req.params.id;
         console.log(userId)
         console.log(jobId)
@@ -94,11 +101,12 @@ export const getAppliedJobs = async (req,res) => {
 export const getApplicants = async (req,res) => {
     try {
         const jobId = req.params.id;
-        const job = await Job.findById(jobId).populate({
+        const job = await Job.findById(jobId).select('applications').populate({
             path:'applications',
             options:{sort:{createdAt:-1}},
             populate:{
-                path:'applicant'
+                path:'applicant',
+                select:['fullName','email','phoneNumber','profile.resume',"profile.resumeOriginalName"]
             }
         });
         if(!job){
@@ -107,6 +115,7 @@ export const getApplicants = async (req,res) => {
                 success:false
             })
         };
+        console.log(job)
         return res.status(200).json({
             job, 
             succees:true
@@ -121,6 +130,7 @@ export const getApplicants = async (req,res) => {
 export const updateStatus = async (req,res) => {
     try {
         const {status} = req.body;
+        console.log(status)
         const applicationId = req.params.id;
         if(!status){
             return res.status(400).json({
@@ -141,7 +151,8 @@ export const updateStatus = async (req,res) => {
         // update the status
         application.status = status.toLowerCase();
         await application.save();
-
+        console.log("sattus updated")
+        console.log(application)
         return res.status(200).json({
             message:"Status updated successfully.",
             success:true

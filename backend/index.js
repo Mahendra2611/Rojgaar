@@ -11,7 +11,7 @@ import cors from "cors";
 dotenv.config()
 const corsOptions = {
     origin: "http://localhost:5173",
-    methods: ["POST", "GET"],
+    methods: ["POST", "GET","DELETE"],
     credentials: true
   };
 const app = express();
@@ -25,7 +25,25 @@ app.use("/job",jobRouter)
 app.use("/application",applicationRouter)
 // app.get("/email",verificationEmail)
 const PORT = process.env.PORT || 3000
-app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
    connectDB();
     console.log(`Server Running on PORT ${PORT}`)
+})
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+
+  server.close(() => {
+      console.log('Server shutting down due to uncaught exception');
+      process.exit(1); 
+  });
+  setTimeout(() => {
+      console.error('Force shutdown after uncaught exception');
+      process.exit(1);
+  }, 5000);
+});
+process.on('unhandledRejection',(error)=>{
+  console.log('unhandledRejection : ',error)
+  server.close(()=>{
+    process.exit(1)
+  })
 })

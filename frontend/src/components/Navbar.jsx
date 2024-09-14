@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { CustomButtonBlue } from './CustomButton';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -9,24 +9,27 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
 const user = useSelector((state)=>state.user.user)
+console.log(user)
   return (
-    <nav className="bg-gray-800 p-4 mb-4">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <nav className="bg-gray-800 p-4 mb-4 w-full ">
+      <div className="max-w-7xl  mx-auto flex items-center justify-between">
         <img
           src="https://flowbite.com/docs/images/logo.svg"
           alt="Logo"
           className="h-8"
         />
         <div className="flex items-center">
-         {user.role === 'recruiter'?( <div className="hidden md:flex space-x-6 mr-4">
-            <a href="#" className="text-white hover:text-gray-400">Jobs</a>
-            <a href="#" className="text-white hover:text-gray-400">Companies</a>
+        {Object.keys(user).length === 0 &&<div className="hidden md:flex space-x-6 mr-4"><Link to="/signin" className="text-white hover:text-gray-400">LogIn</Link>
+          <Link to="/signup" className="text-white hover:text-gray-400">Register</Link></div>}
+         {user.role === 'recruiter'?( <div className="hidden  md:flex space-x-6 mr-4">
+            <Link to="/job" className="text-white hover:text-gray-400"><CustomButtonBlue>Jobs</CustomButtonBlue></Link>
+            <Link to="/company" className="text-white hover:text-gray-400"><CustomButtonBlue>Company</CustomButtonBlue></Link>
             
           </div>):
           ( <div className="hidden md:flex space-x-6 mr-4">
-            <a href="#" className="text-white hover:text-gray-400">Home</a>
-            <a href="#" className="text-white hover:text-gray-400">About</a>
-            <Link to="/user/jobs" className="text-white hover:text-gray-400">Jobs</Link>
+            <Link to="/user/jobs" className="text-white hover:text-gray-400">Home</Link>
+            <Link to="/user/jobs" className="text-white hover:text-gray-400">About</Link>
+            <Link to="/user/alljobs" className="text-white hover:text-gray-400">Jobs</Link>
           </div>)}
           <img
             src={user?.profile?.profilePhoto}
@@ -58,9 +61,10 @@ const user = useSelector((state)=>state.user.user)
         </div>
       </div>
       {isMenuOpen && (
+        
         user.role === 'recruiter' ? (<div className="md:hidden mt-4">
-          <Link to="#" className="block text-white hover:text-gray-400">Jobs</Link>
-          <Link to="#" className="block mt-2 text-white hover:text-gray-400">Companies</Link>
+          <Link to="/job" className="block text-white hover:text-gray-400"><CustomButtonBlue>Jobs</CustomButtonBlue></Link>
+          <Link to="/company" className="block mt-2 text-white hover:text-gray-400"><CustomButtonBlue>Company</CustomButtonBlue></Link>
          
         </div>):(<div className="md:hidden mt-4">
           <Link to="#" className="block text-white hover:text-gray-400">Home</Link>
@@ -69,10 +73,10 @@ const user = useSelector((state)=>state.user.user)
         </div>)
       )}
       {isProfileMenuOpen && (
-        <div className="absolute top-16 right-4 bg-gray-700 rounded-lg shadow-lg p-4 w-48">
-          <p className="text-white">{user?.fullName}</p>
-          <Link to="/profile" className="block mt-2 text-white hover:text-gray-400">Profile</Link>
-          <Link to="#" className="block mt-2 text-white hover:text-gray-400">Logout</Link>
+        <div className="absolute z-50 top-16 right-4 bg-gray-700 rounded-lg shadow-lg p-4 w-48">
+          <p className="text-emerald-500 underline">{user?.fullName}</p>
+         {user.role === 'recruiter'?( <Link to="/adminprofile" onClick={toggleProfileMenu} className="block mt-2 text-white hover:text-gray-400">Profile</Link>):( <Link to="/profile" onClick={toggleProfileMenu} className="block mt-2 text-white hover:text-gray-400">Profile</Link>)}
+          <Link to="/logout"  onClick={toggleProfileMenu} className="block mt-2 text-white hover:text-gray-400">Logout</Link>
         </div>
       )}
     </nav>

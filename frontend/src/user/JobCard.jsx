@@ -1,13 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { calculateDays } from "../utils/calculateDays";
 const JobCard = ({data}) => {
     const navigate= useNavigate()
   return (
     <div className="flex justify-center items-center  bg-gradient-to-br from-[#0f172a] to-[#1e293b]   ">
+      
       <div className="w-full max-w-md p-6  border border-white/20 backdrop-blur-md bg-white/10 rounded-lg shadow-lg">
         {/* Company Logo */}
+        <h1 className="text-white pb-2 -pt-2">{`${calculateDays(data.createdAt)} days ago`}</h1>
         <div className="flex items-center mb-4">
           <img
             src={data.company.logo} // Replace with your logo URL

@@ -1,5 +1,6 @@
 const validAdmin = (req,res,next)=>{
-    if(req.role !== 'recruiter'){
+    console.log(req.userRole)
+    if(req.userRole !== 'recruiter'){
         return res.status(400).json({
             message:"admin validation failed",
             success:false
