@@ -19,7 +19,7 @@ const FilterOption = () => {
       {
         filter.map((data)=>(
             <div>
-                <h1 className='text-2xl font-bold'>{data.name}</h1>
+                <h1 className='text-2xl font-bold space-x-2'>{data.name}</h1>
            {
              data.options.map((option)=>(
                 <Input value={option} id={data.name.toLowerCase()} addValue={addValue} removeValue={removeValue}/>

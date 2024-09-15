@@ -1,7 +1,7 @@
 import React, { useState ,useRef} from 'react';
 import { useSelector ,useDispatch} from 'react-redux';
 import { toast,ToastContainer } from 'react-toastify';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { addCompany } from '../redux/companySlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
@@ -10,7 +10,7 @@ import CallApi from './CallApi';
 
 const CompanyCreate = () => {
    const [logo,setLogo] = useState();
-    const loader = useSelector((state)=>state.user.loader)
+   const loader = useSelector((state)=>state.loader.loader)
 const dispatch = useDispatch();
 const navigate = useNavigate();
    

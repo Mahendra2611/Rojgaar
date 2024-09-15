@@ -5,7 +5,8 @@ import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { USER_END_POINT } from '../utils/constants';
 import Loader from './Loader';
-import { addUser, toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
+import { addUser } from '../redux/userSlice';
 import { useDispatch ,useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 const Signup = () => {
@@ -18,8 +19,7 @@ const Signup = () => {
       };
 
       const disptach = useDispatch();
-      const loader = useSelector((state) => state.user.loader);
-
+      const loader = useSelector((state)=>state.loader.loader)
       const navigate = useNavigate();
 
       const handleSubmit = async(event)=>{

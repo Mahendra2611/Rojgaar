@@ -1,13 +1,13 @@
 import React, { useState ,useRef} from 'react';
 import { useSelector ,useDispatch} from 'react-redux';
 import { toast,ToastContainer } from 'react-toastify';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { addUser } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 const EditAdminProfile= () => {
     const userData = useSelector((state)=>state.user.user)
-    const loader = useSelector((state)=>state.user.loader)
+    const loader = useSelector((state)=>state.loader.loader)
 const dispatch = useDispatch();
 const navigate = useNavigate();
     console.log(userData)

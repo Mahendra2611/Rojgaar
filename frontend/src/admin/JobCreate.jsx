@@ -1,7 +1,7 @@
 import React, { useState ,useRef} from 'react';
 import { useSelector ,useDispatch} from 'react-redux';
 import { toast,ToastContainer } from 'react-toastify';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { addJob } from '../redux/JobSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
@@ -11,7 +11,7 @@ import { checkNumber } from '../hooks/check';
 import CallApi from './CallApi';
 const JobCreate = () => {
   
-    const loader = useSelector((state)=>state.user.loader)
+  const loader = useSelector((state)=>state.loader.loader)
 const dispatch = useDispatch();
 const navigate = useNavigate();
    

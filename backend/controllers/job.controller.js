@@ -8,7 +8,7 @@ try {
    
     if (!title || !description || !requirements || !salary || !location || !jobType || !experienceLevel || !position ) {
         console.log("error")
-        return res.status(400).json({
+        return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
             message: "Some Inputs are missing",
             success: false
         })
@@ -28,34 +28,34 @@ try {
         company: companyId,
         created_by: userId
     })
-    return res.status(200).json({
+    return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
         message:"JOb created successfully",
         job:job
     })
 } catch (error) {
    
-    return res.status(400).json({
+    return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
         message:"Something went wrong in post job"
     })
 }
 }
 export const getAllJobs = async(req,res)=>{
 try {
-   // console.log("get all jobs called")
+   //console.log("get all jobs called")
     const userId = req.userId
     const job = await Job.find({}).populate("company").sort({createdAt:-1})
     //console.log(job)
     if(!job){
-        return res.status(400).json({
+        return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
             message:"Jobs not found"
         })
     }
     //console.log("job return")
-    return res.status(200).json({
+    return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
         job:job
     })
 } catch (error) {
-    return res.status(400).josn({
+    return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).josn({
         message:"Something went wrong"
     })
 }

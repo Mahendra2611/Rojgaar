@@ -11,7 +11,7 @@ const Input = ({id,value,addValue,removeValue}) => {
   }
   return (
    
-    <div>
+    <div className='space-x-2 w-full'>
       <input type='checkbox' onChange={handlChange} id={id} name={id} value={value}/>
        <label htmlFor={id}>{value}</label>
     </div>

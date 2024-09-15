@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import JobTable from './JobTable';
 import { useMemo } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { addJob ,deleteJobb} from '../redux/JobSlice';
@@ -13,7 +13,7 @@ import { CustomButtonGreen } from '../components/CustomButton';
 const Job = () => {
     const [inp,setInp] = useState("");
     const navigate = useNavigate();
-    const loader = useSelector((state)=>state?.user?.loader)
+    const loader = useSelector((state)=>state.loader.loader)
     const dispatch = useDispatch();
     let jobData = useSelector((state)=>state?.job?.job||[])
     const [isModal,setisModal] = useState(false);

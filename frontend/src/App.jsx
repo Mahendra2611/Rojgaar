@@ -23,6 +23,7 @@ import AllJobs from "./user/AllJobs"
 import AdminProtected from "./admin/AdminProtected"
 import Logout from "./components/Logout"
 import RecruiterLandingPage from "./admin/RecruiterLandingPage"
+import InternShip from "./user/InternShip"
 function App() {
 const AppRouter = createBrowserRouter([
   {
@@ -91,8 +92,8 @@ const AppRouter = createBrowserRouter([
       element:<JobDetails/>
     },
     {
-      path:"user/alljobs",
-      element:<AllJobs/>
+      path:"user/intern",
+      element:<InternShip/>
     },
   ]
 },

@@ -5,10 +5,11 @@ import NotFound from './NotFound'
 import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast,ToastContainer } from 'react-toastify'
-const UserJob = () => {
+import { addIntern } from '../redux/InternSlice'
+const InternShip = () => {
     const dispatch = useDispatch();
     const {filter} = useParams();
-    const jobsData = useSelector((state)=>state.job.job);
+    const jobsData = useSelector((state)=>state.intern.intern);
     const [inp,setInp] = useState(filter||"");
     const filterData = useMemo(()=>{
         return jobsData?.length>0 && jobsData?.filter((job)=>((job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "" || (job?.title?.toLowerCase().includes(inp?.toLowerCase()))))
@@ -36,7 +37,7 @@ const UserJob = () => {
            })
            const data  = await response.json();
            console.log(data.job)
-           dispatch(addJob(data.job.filter((data)=>data.jobType.includes("Full Time"))));
+           dispatch(addIntern(data.job.filter((data)=>data.jobType.includes("Intern"))));
         } catch (error) {
             toast.error("Something went wrong")
         }
@@ -81,4 +82,4 @@ theme="light"
   )
 }
 
-export default UserJob
+export default InternShip

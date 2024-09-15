@@ -6,7 +6,7 @@ export const registerCompany = async(req,res)=>{
     
     const { name, description, website, location } = req.body;
     if (!name || !description || !website ||!location ) {
-        return res.status(400).json({
+        return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
             message: "Input fiels are not correct"
         })
     }
@@ -39,7 +39,7 @@ export const registerCompany = async(req,res)=>{
             company: companyData
         })
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
             message: "company registeration failed"
         })

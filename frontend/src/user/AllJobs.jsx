@@ -14,24 +14,24 @@ console.log(filterValue)
    //console.log(jobsData)
     let filterData;
     useMemo(() => {
-      if (filterValue.length === 0) {
+      if (filterValue?.length === 0) {
         filterData = jobsData;
         return;
       }
   
-      const locationFilters = filterValue.filter(f => ["delhi", "noida", "gurgaon", "bengluru", "hyderabad", "other"].includes(f));
-      const industryFilters = filterValue.filter(f => ["frontend developer", "backend developer", "full stack developer", "Data Science", "Next js", "Others"].includes(f));
+      const locationFilters = filterValue?.filter(f => ["delhi", "noida", "gurgaon", "bengluru", "hyderabad", "other"].includes(f));
+      const industryFilters = filterValue?.filter(f => ["frontend developer", "backend developer", "full stack developer", "data science", "next js", "others"].includes(f));
      
-      const jobTypeFilters = filterValue.filter(f => ["full time", "internship"].includes(f));
+      const jobTypeFilters = filterValue.filter(f => ["full time", "intern"].includes(f));
   console.log(locationFilters)
   console.log(industryFilters)
       filterData = jobsData.filter((job) => {
-        const locationMatch = locationFilters.length === 0 || locationFilters.includes(job.location.toLowerCase());
-        const industryMatch = industryFilters.length === 0 || industryFilters.includes(job.title.toLowerCase());
+        const locationMatch = locationFilters?.length === 0 || locationFilters.includes(job.location.toLowerCase());
+        const industryMatch = industryFilters?.length === 0 || industryFilters.includes(job.title.toLowerCase());
        
-        const jobTypeMatch = jobTypeFilters.length === 0 || jobTypeFilters.includes(job.jobType.toLowerCase());
+        const jobTypeMatch = jobTypeFilters?.length === 0 || jobTypeFilters.includes(job.jobType.toLowerCase());
   
-        return locationMatch && industryMatch && salaryMatch && jobTypeMatch;
+        return locationMatch && industryMatch  && jobTypeMatch;
       });
     }, [jobsData, filterValue]);
   console.log(filterData)
@@ -63,28 +63,14 @@ console.log(filterValue)
         }
     }
     useEffect(()=>{
-      
-       if(jobsData.length === 0){
+      console.log(jobsData)
         getJobs();
-       }
-       
     },[])
   return (
     <div className='flex'>
         <div className='basis-1/3 px-5'><FilterOption/></div>
         <div className='space-y-5'>
-    <div className='basis-2/3 flex justify-between items-center px-10'>
-       <input 
-       type='text'
-       placeholder='search by name'
-       className='px-4 py-2 text-[16px]'
-       onChange={(e)=>{
-        handleChange(e.target.value)
-      console.log(e.target.value)
-      }}
-       />
-       
-      </div>
+   
       <div className='flex flex-wrap gap-10'>
      {filterData?.length>0 && filterData.map((job,index)=>(
         <JobCard key={index} data={job}/>

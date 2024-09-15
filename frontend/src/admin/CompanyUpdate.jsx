@@ -1,7 +1,7 @@
 import React, { useState ,useRef} from 'react';
 import { useSelector ,useDispatch} from 'react-redux';
 import { toast,ToastContainer } from 'react-toastify';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { addCompany } from '../redux/companySlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
@@ -10,7 +10,7 @@ import { CustomButtonBlue } from '../components/CustomButton';
 import CallApi from './CallApi';
 const CompanyUpdate = () => {
    const {id} = useParams();
-     const loader = useSelector((state)=>state.user.loader)
+   const loader = useSelector((state)=>state.loader.loader)
      let companiesData = useSelector((state)=>state?.company?.company||[])
  const dispatch = useDispatch();
  const navigate = useNavigate();

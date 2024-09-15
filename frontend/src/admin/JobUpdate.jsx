@@ -1,7 +1,7 @@
 import React, { useState ,useRef} from 'react';
 import { useSelector ,useDispatch} from 'react-redux';
 import { toast,ToastContainer } from 'react-toastify';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { updateJob } from '../redux/JobSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../components/Loader';

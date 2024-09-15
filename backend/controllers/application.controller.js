@@ -4,7 +4,7 @@ import { splitVendorChunkPlugin } from "vite";
 
 export const applyJob = async (req, res) => {
     try {
-        console.log("apply job called")
+        //console.log("apply job called")
         const userId = req.userId;
         const role = req.userRole;
         if(role !== "student"){
@@ -14,30 +14,30 @@ export const applyJob = async (req, res) => {
             })
         }
         const jobId = req.params.id;
-        console.log(userId)
-        console.log(jobId)
+       // console.log(userId)
+        //console.log(jobId)
         if (!jobId) {
-            return res.status(400).json({
+            return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
                 message: "Job id is required.",
                 success: false
             })
         };
         // check if the user has already applied for the job
-        console.log("apply job")
+        //console.log("apply job")
         const existingApplication = await Application.findOne({ job: jobId, applicant: userId });
 
         if (existingApplication) {
-            return res.status(400).json({
+            return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
                 message: "You have already applied for this jobs",
                 success: false
             });
         }
 
         // check if the jobs exists
-        console.log("job exist")
+       // console.log("job exist")
         const job = await Job.findById(jobId);
         if (!job) {
-            return res.status(404).json({
+            return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
                 message: "Job not found",
                 success: false
             })
@@ -48,25 +48,25 @@ export const applyJob = async (req, res) => {
             job:jobId,
             applicant:userId,
         });
-        console.log(newApplication)
+        //console.log(newApplication)
         job.applications.push(newApplication._id);
         await job.save();
-        return res.status(201).json({
+        return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
             message:"Job applied successfully.",
             success:true
         })
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({
+        //console.log(error);
+        return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
             message: "apply job failed"
         })
     }
 };
 export const getAppliedJobs = async (req,res) => {
     try {
-        console.log("apllied job called")
+        //console.log("apllied job called")
         const userId = req.userId;
-        console.log(userId)
+        //console.log(userId)
         const application = await Application.find({applicant:userId}).sort({createdAt:-1}).populate({
             path:'job',
             select:'title',
@@ -77,23 +77,23 @@ export const getAppliedJobs = async (req,res) => {
                 options:{sort:{createdAt:-1}},
             }
         });
-        console.log(application)
-        console.log("erro check")
+        //console.log(application)
+        //console.log("erro check")
         if(!application){
-            return res.status(404).json({
-                message:"No Applications",
+            return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
+                message:"No Applications Found",
                 success:false
             })
         };
-        console.log("return")
-        return res.status(200).json({
+       // console.log("return")
+        return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
             application,
             success:true
         })
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({
-            message: "get job failed"
+        //console.log(error);
+        return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
+            message: "Get Application failed"
         })
     }
 }
@@ -110,19 +110,19 @@ export const getApplicants = async (req,res) => {
             }
         });
         if(!job){
-            return res.status(404).json({
+            return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
                 message:'Job not found.',
                 success:false
             })
         };
-        console.log(job)
-        return res.status(200).json({
+        //console.log(job)
+        return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
             job, 
             succees:true
         });
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({
+        //console.log(error);
+        return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
             message: "get job failed"
         })
     }
@@ -130,10 +130,10 @@ export const getApplicants = async (req,res) => {
 export const updateStatus = async (req,res) => {
     try {
         const {status} = req.body;
-        console.log(status)
+        //console.log(status)
         const applicationId = req.params.id;
         if(!status){
-            return res.status(400).json({
+            return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
                 message:'status is required',
                 success:false
             })
@@ -142,7 +142,7 @@ export const updateStatus = async (req,res) => {
         // find the application by applicantion id
         const application = await Application.findOne({_id:applicationId});
         if(!application){
-            return res.status(404).json({
+            return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
                 message:"Application not found.",
                 success:false
             })
@@ -151,16 +151,16 @@ export const updateStatus = async (req,res) => {
         // update the status
         application.status = status.toLowerCase();
         await application.save();
-        console.log("sattus updated")
-        console.log(application)
-        return res.status(200).json({
+        //console.log("sattus updated")
+        //console.log(application)
+        return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
             message:"Status updated successfully.",
             success:true
         });
 
     } catch (error) {
-        console.log(error);
-        return res.status(400).json({
+       // console.log(error);
+        return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
             message: "get job failed"
         })
     }

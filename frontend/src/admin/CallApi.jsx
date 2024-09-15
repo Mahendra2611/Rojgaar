@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { addJob } from '../redux/JobSlice';
 import { ToastContainer,toast } from 'react-toastify';
-import { toggleLoader} from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 const CallApi = () => {
     console.log("api caled")
     const dispatch = useDispatch();

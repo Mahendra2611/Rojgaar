@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CompanyTable from './CompanyTable'
 import { useMemo } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
-import { toggleLoader } from '../redux/userSlice';
+import { toggleLoader } from '../redux/loaderSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { addCompany ,deleteComanyy} from '../redux/companySlice';
@@ -14,7 +14,7 @@ const Companies = () => {
     const [isModal,setisModal] = useState(false);
     const [companyToDelete,setCompanytoDelete] = useState({});
     const navigate = useNavigate();
-    const loader = useSelector((state)=>state.user.loader)
+    const loader = useSelector((state)=>state.loader.loader)
     const dispatch = useDispatch();
     let companiesData = useSelector((state)=>state?.company?.company||[])
     console.log(companiesData)

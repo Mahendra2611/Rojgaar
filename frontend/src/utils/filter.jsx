@@ -12,7 +12,7 @@ export const filter = [
     },
     {
         name:"JobType",
-        options:["Full Time","Internship"],
+        options:["Full Time","Intern"],
         id:3,
     },
 ]

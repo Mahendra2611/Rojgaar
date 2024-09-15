@@ -164,37 +164,46 @@ export const updateProfile = async (req, res) => {
       }
       
       const uploadPromises = [];
+      console.log(req.files.profilePhoto)
+      console.log(req.files.resume)
+      // if (req.files.profilePhoto) {
+      //   const photoUploadPromise = new Promise((resolve, reject) => {
+      //     const profilePhotoPath = req.files.profilePhoto[0].path;
+      //     resolve(profilePhotoPath); 
+      //   });
+  
+      //   uploadPromises.push(photoUploadPromise);
+      // }
   
      
-      if (req.files.profilePhoto) {
-        const photoUploadPromise = new Promise((resolve, reject) => {
-          const profilePhotoPath = req.files.profilePhoto[0].path;
-          resolve(profilePhotoPath); 
-        });
+      // if (req.files.resume) {
+      //   const resumeUploadPromise = new Promise((resolve, reject) => {
+      //     const resumePath = req.files.resume[0].path;
+      //     const resumeOriginalName = req.files.resume[0].originalname;
+      //     resolve({ resumePath, resumeOriginalName }); 
+      //   });
+      //   uploadPromises.push(resumeUploadPromise);
+      // }
+      // const uploadResults = await Promise.all(uploadPromises);
   
-        uploadPromises.push(photoUploadPromise);
+      // uploadResults.forEach((result, index) => {
+      //   if (index === 0 && req.files.profilePhoto) {
+      //     DataToBeUpdated["profile.profilePhoto"] = result;
+      //   } else if (index === 1 && req.files.resume) {
+      //     DataToBeUpdated["profile.resume"] = result.resumePath;
+      //     DataToBeUpdated["profile.resumeOriginalName"] = result.resumeOriginalName;
+      //   }
+      // });
+      if(req.files.profilePhoto){
+            DataToBeUpdated["profile.profilePhoto"] = req.files.profilePhoto[0].path;
       }
-  
-     
-      if (req.files.resume) {
-        const resumeUploadPromise = new Promise((resolve, reject) => {
-          const resumePath = req.files.resume[0].path;
-          const resumeOriginalName = req.files.resume[0].originalname;
-          resolve({ resumePath, resumeOriginalName }); 
-        });
-        uploadPromises.push(resumeUploadPromise);
+      if(req.files.resume){
+        DataToBeUpdated["profile.resume"] = req.files.resume[0].path;
+          DataToBeUpdated["profile.resumeOriginalName"] =  req.files.resume[0].originalname;
+        
       }
-      const uploadResults = await Promise.all(uploadPromises);
-  
-      uploadResults.forEach((result, index) => {
-        if (index === 0 && req.files.profilePhoto) {
-          DataToBeUpdated["profile.profilePhoto"] = result;
-        } else if (index === 1 && req.files.resume) {
-          DataToBeUpdated["profile.resume"] = result.resumePath;
-          DataToBeUpdated["profile.resumeOriginalName"] = result.resumeOriginalName;
-        }
-      });
-  
+      //console.log("update data")
+      //console.log(DataToBeUpdated)
       const id = req.userId;
       await User.updateOne({ _id: id }, {$set:DataToBeUpdated});
       const updatedUser = await User.findOne({ _id: id }, { _id:0,password: 0 });

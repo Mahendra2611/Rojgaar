@@ -36,34 +36,32 @@ useEffect(()=>{
   getJobsApplied();
 },[])
   return (
-   <div>
+   <div className='mx-2'>
      <div
-      className="p-6 max-w-4xl mx-auto rounded-lg shadow-lg"
-      style={{ background: 'linear-gradient(to top, #96fbc4 0%, #f9f586 100%)' }}
-    >
+      className="p-6 max-w-4xl mx-auto rounded-lg  bg-[#62c48e] shadow-[inset_10px_10px_10px_-1px_#418d63,inset_-10px_-10px_10px_-1px_#8af1b9]">
       <div className="flex justify-end">
-        <button onClick={handleEdit} className="text-white bg-blue-500 hover:bg-blue-600 rounded-full p-2">
+        <button onClick={handleEdit} className="text-white bg-[#3968ad] shadow-[inset_5px_5px_5px_-1px_#264d88,inset_-5px_-5px_5px_-1px_#5c88ca rounded-xl py-1 md:py-2 px-2 md:px-4">
           Edit
         </button>
       </div>
       <div className="text-center ">
         <img
-          className="w-32 h-32 mx-auto rounded-full"
+          className="w-20 h-20 md:w-32 md:h-32 mx-auto rounded-full"
           src={user?.profile?.profilePhoto}
           alt="U"
         />
-        <h2 className="text-2xl font-bold pb-1 mt-4">{user?.fullName}</h2>
+        <h2 className="text-xl md:text-2xl font-bold pb-1 mt-4">{user?.fullName}</h2>
         <p className="text-gray-700 pb-1">{user?.role}</p>
         <p className="text-gray-700 pb-1">{user?.email}</p>
         <p className="text-gray-700">{user?.phoneNumber}</p>
       </div>
       <div className="mt-6">
-        <h3 className="text-xl font-semibold">Skills</h3>
+        <h3 className="text-lg md:text-xl font-semibold">Skills</h3>
         <div className="flex flex-wrap gap-2 mt-2">
           {user?.profile?.skills.map((skill, index) => (
             <span
               key={index}
-              className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full"
+              className="px-3 py-1 text-xs md:text-lg bg-blue-100 text-blue-800 rounded-full"
             >
               {skill}
             </span>
@@ -71,12 +69,12 @@ useEffect(()=>{
         </div>
       </div>
       <div className="mt-6">
-        <h3 className="text-xl font-semibold">Resume</h3>
+        <h3 className="text-lg md:text-xl font-semibold">Resume</h3>
         <a
           href={user?.profile?.resume}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
+          className="text-red-800 text-xl md:text-xl hover:underline"
         >
          { user?.profile?.resumeOriginalName}
         </a>
