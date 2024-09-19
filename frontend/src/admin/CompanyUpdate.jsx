@@ -64,7 +64,7 @@ const CompanyUpdate = () => {
          try {
            dispatch(toggleLoader(true));
           
-             const response = await fetch(`http://localhost:3000/company/update/${companiesData[id]._id}`, {
+             const response = await fetch(`https://rojgaar-wm0j.onrender.com/company/update/${companiesData[id]._id}`, {
                  method: "POST",
                  credentials: "include",
                  body: formData

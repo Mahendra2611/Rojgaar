@@ -51,7 +51,7 @@ const filterValue = useSelector((state)=>state.job.filter)
     const getJobs = async()=>{
         //console.log("get job called")
         try {
-           const response =  await fetch("http://localhost:3000/job/get",{
+           const response =  await fetch("https://rojgaar-wm0j.onrender.com/job/get",{
             method:"GET",
             credentials:"include",
            })

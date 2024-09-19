@@ -71,7 +71,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
          //console.log(jobData[id]._id)
-            const response = await fetch(`http://localhost:3000/job/update?id=${jobData[id]._id}`, {
+            const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/update?id=${jobData[id]._id}`, {
                 method: "POST",
                 credentials: "include",
                 headers:{

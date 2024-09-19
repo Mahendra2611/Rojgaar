@@ -27,7 +27,7 @@ const SavedJob = () => {
         }
     const getSaved = async()=>{
         try {
-            const response =  await fetch(`http://localhost:3000/savelater/get`,{
+            const response =  await fetch(`https://rojgaar-wm0j.onrender.com/savelater/get`,{
               method:"GET",
               credentials:"include",
              })

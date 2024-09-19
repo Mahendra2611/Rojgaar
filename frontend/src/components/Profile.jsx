@@ -31,7 +31,7 @@ const handleEdit = ()=>{
 }
 const getJobsApplied = async()=>{
   try {
-    const response = await fetch("http://localhost:3000/application/get",{
+    const response = await fetch("https://rojgaar-wm0j.onrender.com/application/get",{
       method:"GET",
       credentials:"include"
     })

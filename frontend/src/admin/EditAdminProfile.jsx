@@ -58,7 +58,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
           //console.log("request send")
-            const response = await fetch("http://localhost:3000/user/profile/update", {
+            const response = await fetch("https://rojgaar-wm0j.onrender.com/user/profile/update", {
                 method: "POST",
                 credentials: "include",
                 body: formData

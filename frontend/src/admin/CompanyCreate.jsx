@@ -52,7 +52,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
          
-            const response = await fetch("http://localhost:3000/company/register", {
+            const response = await fetch("https://rojgaar-wm0j.onrender.com/company/register", {
                 method: "POST",
                 credentials: "include",
                 body: formData

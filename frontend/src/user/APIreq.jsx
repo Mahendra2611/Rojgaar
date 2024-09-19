@@ -2,7 +2,7 @@
 export const handleSavee = async(jobId)=>{
   //console.log("handle save called")
   try {
-    const response =  await fetch(`http://localhost:3000/savelater/post?id=${jobId}`,{
+    const response =  await fetch(`https://rojgaar-wm0j.onrender.com/savelater/post?id=${jobId}`,{
       method:"POST",
       credentials:"include",
      })
@@ -17,7 +17,7 @@ export const handleSavee = async(jobId)=>{
 export const handleRemovee = async(jobId)=>{
   //console.log("handle remove called")
   try {
-    const response =  await fetch(`http://localhost:3000/savelater/delete?id=${jobId}`,{
+    const response =  await fetch(`https://rojgaar-wm0j.onrender.com/savelater/delete?id=${jobId}`,{
       method:"DELETE",
       credentials:"include",
      })

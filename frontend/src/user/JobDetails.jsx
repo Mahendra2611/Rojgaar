@@ -24,7 +24,7 @@ const JobDetails = () => {
         return;
       }
         try {
-            const response = await fetch(`http://localhost:3000/application/apply/${id}`,{
+            const response = await fetch(`https://rojgaar-wm0j.onrender.com/application/apply/${id}`,{
                 method:"GET",
                 credentials:"include",
 
@@ -44,7 +44,7 @@ const JobDetails = () => {
     }
     const getDetails = async()=>{
         try {
-            const response = await fetch(`http://localhost:3000/job/get/${id}`,{
+            const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/get/${id}`,{
                 method:"GET",
                 credentials:"include",
 

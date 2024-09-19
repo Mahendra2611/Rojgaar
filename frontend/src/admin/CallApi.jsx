@@ -10,7 +10,7 @@ const CallApi = () => {
         try {
           dispatch(toggleLoader(true));
            
-          const response = await fetch(`http://localhost:3000/job/getadminjobs`, {
+          const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/getadminjobs`, {
               method: "GET",
               credentials: "include",
               headers:{
@@ -38,7 +38,7 @@ const CallApi = () => {
         try {
           dispatch(toggleLoader(true));
            
-          const response = await fetch("http://localhost:3000/company/get", {
+          const response = await fetch("https://rojgaar-wm0j.onrender.com/company/get", {
               method: "GET",
               credentials: "include",
              

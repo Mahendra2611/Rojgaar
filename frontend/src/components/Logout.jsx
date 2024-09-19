@@ -4,7 +4,7 @@ const Logout = () => {
     const [msg,setMsg] = useState("");
     const getLogOut = async()=>{
         try {
-            const response = await fetch("http://localhost:3000/user/logout", {
+            const response = await fetch("https://rojgaar-wm0j.onrender.com/user/logout", {
                 method: "GET",
                 credentials: "include",
         })

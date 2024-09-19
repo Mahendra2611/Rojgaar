@@ -65,7 +65,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
          
-            const response = await fetch("http://localhost:3000/job/post", {
+            const response = await fetch("https://rojgaar-wm0j.onrender.com/job/post", {
                 method: "POST",
                 credentials: "include",
                 headers:{

@@ -45,7 +45,7 @@ console.log(filterData)
       try {
         dispatch(toggleLoader(true));
          
-        const response = await fetch(`http://localhost:3000/job/getadminjobs`, {
+        const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/getadminjobs`, {
             method: "GET",
             credentials: "include",
             headers:{
@@ -71,7 +71,7 @@ console.log(filterData)
     const deleteJob = async(id,index) => {
      
       try {
-         const response = await fetch(`http://localhost:3000/job/deletejob/${id}`,{
+         const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/deletejob/${id}`,{
              method:"DELETE",
              credentials:"include"
          })

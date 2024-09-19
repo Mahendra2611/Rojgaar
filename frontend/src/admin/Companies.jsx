@@ -46,7 +46,7 @@ navigate("/company/create")
       try {
         dispatch(toggleLoader(true));
          
-        const response = await fetch("http://localhost:3000/company/get", {
+        const response = await fetch("https://rojgaar-wm0j.onrender.com/company/get", {
             method: "GET",
             credentials: "include",
            
@@ -73,7 +73,7 @@ navigate("/company/create")
       //console.log(id)
       //console.log(index)
       try {
-         const response = await fetch(`http://localhost:3000/company/deletecompany/${id}`,{
+         const response = await fetch(`https://rojgaar-wm0j.onrender.com/company/deletecompany/${id}`,{
              method:"DELETE",
              credentials:"include"
          })
