@@ -1,7 +1,6 @@
 import { Job } from "../models/job.model.js";
 import { Application } from "../models/application.model.js";
-import { splitVendorChunkPlugin } from "vite";
-import { application } from "express";
+
 
 export const applyJob = async (req, res) => {
     try {
