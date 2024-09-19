@@ -1,6 +1,7 @@
 import { Job } from "../models/job.model.js";
 import { Application } from "../models/application.model.js";
 import { splitVendorChunkPlugin } from "vite";
+import { application } from "express";
 
 export const applyJob = async (req, res) => {
     try {
@@ -8,7 +9,7 @@ export const applyJob = async (req, res) => {
         const userId = req.userId;
         const role = req.userRole;
         if(role !== "student"){
-            return res.status(400).json({
+            return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
                 message: "Log in as student",
                 success: false
             })
@@ -43,7 +44,7 @@ export const applyJob = async (req, res) => {
             })
         }
         // create a new application
-        console.log("create application")
+       // console.log("create application")
         const newApplication = await Application.create({
             job:jobId,
             applicant:userId,
@@ -82,6 +83,7 @@ export const getAppliedJobs = async (req,res) => {
         if(!application){
             return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
                 message:"No Applications Found",
+                application:[],
                 success:false
             })
         };
@@ -93,7 +95,8 @@ export const getAppliedJobs = async (req,res) => {
     } catch (error) {
         //console.log(error);
         return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
-            message: "Get Application failed"
+            message: "Get Application failed",
+            application:[]
         })
     }
 }
@@ -147,7 +150,12 @@ export const updateStatus = async (req,res) => {
                 success:false
             })
         };
-
+        if(application.status !== 'pending'){
+            return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||400).json({
+                message:"Application already updated",
+                success:false
+            })
+        }
         // update the status
         application.status = status.toLowerCase();
         await application.save();

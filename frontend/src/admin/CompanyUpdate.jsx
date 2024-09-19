@@ -26,7 +26,7 @@ const CompanyUpdate = () => {
        const handleFileChange = (e) => {
          const file = e.target.files[0]; 
          const maxSize = 500*1024;
-         console.log(file);
+         //console.log(file);
          if(file && file.size > maxSize){
            toast("File size exceeded")
            return;
@@ -57,10 +57,10 @@ const CompanyUpdate = () => {
         if(company.logo){
          formData.append("logo", company.logo || "");
         }
-         formData.forEach((value,key)=>{
-           console.log(`${key}:${value}`)
-         })
- 
+        //  formData.forEach((value,key)=>{
+        //    console.log(`${key}:${value}`)
+        //  })
+   console.log(companiesData[id]._id)
          try {
            dispatch(toggleLoader(true));
           
@@ -72,21 +72,21 @@ const CompanyUpdate = () => {
              const data = await response.json();
              if (response.ok) {
               
-               console.log(data)
-                dispatch(updateCompany({id:id,data:data}))
-                 console.log("Data received successfully");
+              // console.log(data)
+                // dispatch(updateCompany({id:id,data:data}))
+                // console.log("Data received successfully");
                  navigate("/company")
              } else {
               toast.error(data.message)
-                 console.log("Data couldn't be sent successfully");
+                // console.log("Data couldn't be sent successfully");
              }
          } catch (error) {
           toast.error("Something went wrong")
-             console.log(error);
+             //console.log(error);
          }
          finally{
            dispatch(toggleLoader(false));
-           CallApi()
+           
          }
      };
      

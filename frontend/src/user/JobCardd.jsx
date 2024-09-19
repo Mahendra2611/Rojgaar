@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { calculateDays } from "../utils/calculateDays";
-const JobCard = ({data,handleSave}) => {
+const JobCard = ({data,handleRemove}) => {
     const navigate= useNavigate()
   return (
     <div className="flex justify-center items-center  bg-[#1e293b]   ">
@@ -35,8 +35,8 @@ const JobCard = ({data,handleSave}) => {
           <button onClick={()=>{navigate(`/user/jobs/deatils/${data?._id}`)}} className="px-4 py-2 text-sm text-white bg-[#3474b1] shadow-[inset_5px_5px_5px_-1px_#22588a,inset_-5px_-5px_5px_-1px_#4b91d3]  rounded-lg">
             View Details
           </button>
-          <button onClick={()=>{handleSave(data?._id)}} className="px-4 py-2 text-sm text-blue-600 bg-[#d0d3d8] shadow-[inset_5px_5px_5px_-1px_#a9adb4,inset_-5px_-5px_5px_-1px_#e6e8eb]  rounded-lg">
-            Save for Later
+          <button onClick={()=>{handleRemove(data?._id)}} className="px-4 py-2 text-sm text-white bg-[#ac4242] shadow-[inset_5px_5px_5px_-1px_#642121,inset_-5px_-5px_5px_-1px_#e26060] rounded-lg">
+           Remove
           </button>
         </div>
       </div>

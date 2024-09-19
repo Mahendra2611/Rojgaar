@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"
 import cloudinary from "../utils/cloudinaryConfig.js";
 export const register = async (req, res) => {
     const result = validationResult(req);
-    console.log(result);
+    //console.log(result);
     if (!result.isEmpty()) {
         return res.status(400).json({
             message: "Input fiels are not correct",
@@ -32,7 +32,7 @@ export const register = async (req, res) => {
             role
         })
        
-       console.log(userData)
+       //console.log(userData)
         const jwtToken = jwt.sign({
             user: {
                 userId: userData._id,
@@ -46,7 +46,7 @@ export const register = async (req, res) => {
             user: userData
         })
     } catch (error) {
-        console.log(error)
+       // console.log(error)
         return res.status(400).json({
             message: "user registeration failed",
             success:false
@@ -62,18 +62,25 @@ export const login = async (req, res) => {
         })
     }
     const { email, password,role} = req.body;
+    //console.log(email)
     try {
         const user = await User.findOne({ email });
         console.log(user)
+        if(!user){
+            return res.status(400).json({
+                message: "User doesn't exist",
+                success: false
+            })
+        }
         if (user.email !== email) {
             return res.status(400).json({
                 message: "Incorrect Email",
                 success: false
             })
         }
-        if (user.role !== role) {
+        if (user.role !== ("student"||"recruiter")) {
           return res.status(400).json({
-              message: "Incorrect Role",
+              message: "Incorrect Input Fields",
               success: false
           })
       }
@@ -112,7 +119,7 @@ export const login = async (req, res) => {
                 user: user
             });
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(400).json({
             message: "user log in failed"
         })
@@ -126,7 +133,7 @@ export const logout = (req, res) => {
             success:true
         })
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(400).json({
             message: "user log out failed",
           
@@ -164,8 +171,8 @@ export const updateProfile = async (req, res) => {
       }
       
       const uploadPromises = [];
-      console.log(req.files.profilePhoto)
-      console.log(req.files.resume)
+     // console.log(req.files.profilePhoto)
+      //console.log(req.files.resume)
       // if (req.files.profilePhoto) {
       //   const photoUploadPromise = new Promise((resolve, reject) => {
       //     const profilePhotoPath = req.files.profilePhoto[0].path;
@@ -213,7 +220,7 @@ export const updateProfile = async (req, res) => {
         user:updatedUser,
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
         message: 'Internal server error',
         success:false,

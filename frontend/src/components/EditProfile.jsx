@@ -11,8 +11,8 @@ const EditProfile= () => {
     const loader = useSelector((state)=>state?.loader?.loader||false)
 const dispatch = useDispatch();
 const navigate = useNavigate();
-    console.log(userData)
-    console.log(loader)
+    //console.log(userData)
+    //console.log(loader)
     const [user, setUser] = useState({
         photo: "",
         name: userData?.fullName||"",
@@ -25,7 +25,7 @@ const navigate = useNavigate();
       const handleFileChange = (e) => {
         const file = e.target.files[0]; // Get the actual file object
         const maxSize = 500*1024;
-        console.log(file);
+        //console.log(file);
         if(file && file.size > maxSize){
           toast("File size exceeded")
           return;
@@ -87,12 +87,12 @@ const navigate = useNavigate();
         user.skills.forEach((skill, index) => {
             formData.append(`skills[${index}]`, skill);
         });
-        formData.forEach((value,key)=>{
-          console.log(`${key}:${value}`)
-        })
+        // formData.forEach((value,key)=>{
+        //   //console.log(`${key}:${value}`)
+        // })
         try {
           dispatch(toggleLoader(true));
-          console.log("request send")
+          //console.log("request send")
             const response = await fetch("http://localhost:3000/user/profile/update", {
                 method: "POST",
                 credentials: "include",
@@ -101,17 +101,17 @@ const navigate = useNavigate();
             const data = await response.json();
             if (response.ok) {
              
-              console.log(data)
+              //console.log(data)
 dispatch(addUser(data.user))
-                console.log("Data sent successfully");
+                //console.log("Data sent successfully");
                 navigate("/profile")
             } else {
-                console.log("Data couldn't be sent successfully");
+                //console.log("Data couldn't be sent successfully");
                 toast.error(data.message)
             }
         } catch (error) {
           toast.error("Data couldn't be sent successfully")
-            console.log(error);
+            //console.log(error);
         }
         finally{
           dispatch(toggleLoader(false));
@@ -131,6 +131,7 @@ dispatch(addUser(data.user))
       onChange={handleFileChange}
       className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
     />
+    <p className='text-red-400 text-[12px] md:text-[16px]'>Size should be less then 500KB</p>
   </div>
   
   <div>

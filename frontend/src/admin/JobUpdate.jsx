@@ -11,7 +11,7 @@ import CallApi from './CallApi';
 
 const JobUpdate = () => {
   const {id} = useParams();
-    const loader = useSelector((state)=>state.user.loader)
+    const loader = useSelector((state)=>state.loader.loader)
 const dispatch = useDispatch();
 const navigate = useNavigate();
    const jobData = useSelector((state)=>state.job.job)
@@ -29,7 +29,7 @@ const navigate = useNavigate();
      
     const handleChange = (e)=>{
       const {name,value} = e.target;
-      console.log(value)
+      //console.log(value)
       setJob({
         ...job,
         [name]:value
@@ -41,7 +41,7 @@ const navigate = useNavigate();
           const val = job[key]||""
           if(["salary","position","exp"].includes(key)){
             if(!checkNumber(val)){
-              console.log(val)
+              //console.log(val)
               toast.error("Input Fiels are Incorrect")
               return;
             }
@@ -51,7 +51,7 @@ const navigate = useNavigate();
           }
           else{
             if(!checkString(val)){
-              console.log(val)
+              //console.log(val)
               toast.error("Input Fiels are Incorrect")
               return;
             }
@@ -66,11 +66,11 @@ const navigate = useNavigate();
         formData["salary"]=  job?.salary|| "";
         formData["jobType"]= job?.jobType|| "";
         formData["position"]=  job?.position|| "";
-        console.log(formData)
+       // console.log(formData)
 
         try {
           dispatch(toggleLoader(true));
-         console.log(jobData[id]._id)
+         //console.log(jobData[id]._id)
             const response = await fetch(`http://localhost:3000/job/update?id=${jobData[id]._id}`, {
                 method: "POST",
                 credentials: "include",
@@ -90,11 +90,11 @@ const navigate = useNavigate();
             else {
              
               toast.error(data.message)
-                console.log("Data couldn't be sent successfully");
+                //console.log("Data couldn't be sent successfully");
             }
         } catch (error) {
           toast.error("Job updation failed, Try Again")
-            console.log(error);
+            //console.log(error);
         }
         finally{
           dispatch(toggleLoader(false));

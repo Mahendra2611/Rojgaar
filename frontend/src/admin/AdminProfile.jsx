@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const AdminProfile = () => {
   const user = useSelector((state)=>state.user.user)
-  console.log(user)
+  //console.log(user)
 const navigate = useNavigate();
 const handleEdit = ()=>{
     navigate("/editadminprofile")

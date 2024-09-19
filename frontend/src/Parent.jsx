@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom'
 const Parent = () => {
   return (
-    <div>
+    <div className='min-h-screen w-screen overflow-hidden'>
       <Navbar/>
       <Outlet/>
     </div>

@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ToastContainer,toast } from 'react-toastify';
 import JobAppliedTable from './JobAppliedTable';
+
+
 const Profile = () => {
   const user = useSelector((state)=>state.user.user)
-  const [jobsData,setJobsData] = useState([]);
-  console.log(user)
+  const [jobsData,setJobsData] = useState()
+  const [loged,setLoged]= useState(true);
+  //console.log(user)
   // const user = {
   //   photo: 'https://via.placeholder.com/150', // Placeholder image; replace with actual image URL
   //   name: 'John Doe',
@@ -17,25 +21,38 @@ const Profile = () => {
   // };
 const navigate = useNavigate();
 const handleEdit = ()=>{
+   if(Object.keys(user).length === 0){
+    toast.error("You are not logged in")
+   }
+   else{
     navigate("/editprofile")
+   }
+    
 }
 const getJobsApplied = async()=>{
-try {
-  const response = await fetch("http://localhost:3000/application/get",{
-    method:"GET",
-    credentials:"include"
-  })
-  const data  =await response.json();
-  console.log(data);
-  setJobsData(data.application)
-} catch (error) {
-  console.log(error)
-}
-}
-useEffect(()=>{
-  getJobsApplied();
-},[])
-  return (
+  try {
+    const response = await fetch("http://localhost:3000/application/get",{
+      method:"GET",
+      credentials:"include"
+    })
+    const data  = await response.json();
+   // console.log(data)
+   if(response.ok){
+    setJobsData(data.application)
+   }
+   else{
+    toast.error(data.message)
+    //console.log(data.message)
+   }
+  } catch (error) {
+   // console.log(error)
+    toast.error("Something went wrong")
+  }
+  }
+  useEffect(()=>{
+    getJobsApplied();
+  },[])
+  return  (
    <div className='mx-2'>
      <div
       className="p-6 max-w-4xl mx-auto rounded-lg  bg-[#62c48e] shadow-[inset_10px_10px_10px_-1px_#418d63,inset_-10px_-10px_10px_-1px_#8af1b9]">
@@ -83,6 +100,19 @@ useEffect(()=>{
     <div className=' max-w-4xl mx-auto rounded-lg shadow-lg mt-10'>
 <JobAppliedTable job={jobsData}/>
     </div>
+    <ToastContainer
+position="top-right"
+autoClose={2000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover={false}
+theme="light"
+
+/>
    </div>
   );
 };

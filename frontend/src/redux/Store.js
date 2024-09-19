@@ -8,7 +8,7 @@ import rootReducer from "./rootReducers";
 const persistConfig = {
   key: 'root',
   storage:sessionStorage,
-  whitelist: ['user','loader'], // Reducers you want to persist
+  whitelist: ['user','job','intern'], // Reducers you want to persist
 };
 
 

@@ -6,15 +6,17 @@ import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast,ToastContainer } from 'react-toastify'
 import { addIntern } from '../redux/InternSlice'
+import { handleSavee } from './APIreq'
 const InternShip = () => {
     const dispatch = useDispatch();
     const {filter} = useParams();
     const jobsData = useSelector((state)=>state.intern.intern);
+   // console.log(jobsData)
     const [inp,setInp] = useState(filter||"");
     const filterData = useMemo(()=>{
         return jobsData?.length>0 && jobsData?.filter((job)=>((job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "" || (job?.title?.toLowerCase().includes(inp?.toLowerCase()))))
       },[inp,jobsData])
-  console.log(filterData)
+  //console.log(filterData)
       function debounce(func,time){
           let timeOutId;
           return (...args)=>{
@@ -24,19 +26,25 @@ const InternShip = () => {
               },time)
           }
       }
-  
+      const handleSave = async(jobId)=>{
+        const result =  await handleSavee(jobId)
+       // console.log(result)
+      
+         toast(result)
+        
+       }
       const handleChange = debounce((value)=>{
         setInp(value);
       },500);
     const getJobs = async()=>{
-        console.log("get job called")
+       // console.log("get job called")
         try {
            const response =  await fetch("http://localhost:3000/job/get",{
             method:"GET",
             credentials:"include",
            })
            const data  = await response.json();
-           console.log(data.job)
+          // console.log(data.job)
            dispatch(addIntern(data.job.filter((data)=>data.jobType.includes("Intern"))));
         } catch (error) {
             toast.error("Something went wrong")
@@ -61,7 +69,7 @@ const InternShip = () => {
       </div>
       <div className='flex px-5 flex-wrap justify-center items-center gap-10'>
      {filterData?.length>0 ? (filterData.map((job,index)=>(
-        <JobCard key={index} data={job}/>
+        <JobCard key={index} data={job} handleSave={handleSave}/>
      ))):((<NotFound/>))}
     </div>
     <ToastContainer

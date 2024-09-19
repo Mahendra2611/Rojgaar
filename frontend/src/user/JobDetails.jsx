@@ -10,7 +10,7 @@ const JobDetails = () => {
     const user = useSelector((state)=>state?.user?.user)
     const applyJobs = async()=>{
      
-      console.log(user.profile)
+      //console.log(user.profile)
       if(Object.keys(user).length === 0){
         toast.error("You are not logged in")
         return;
@@ -30,7 +30,7 @@ const JobDetails = () => {
 
             })
             const data = await response.json();
-            if(data.success){
+            if(response.ok){
                 toast.success(data.message)
                 sethasApplied(true);
             }
@@ -39,7 +39,7 @@ const JobDetails = () => {
             }
         } catch (error) {
           toast.error("Something went wrong")
-            console.log(error);
+            //console.log(error);
         }
     }
     const getDetails = async()=>{
@@ -50,9 +50,9 @@ const JobDetails = () => {
 
             })
             const data = await response.json();
-            console.log(data.job)
+            //console.log(data.job)
             if(!response.ok){
-              toast.error("Deatils counldn't be fetched")
+              toast.error(data.message)
             }
            else{
             setJob(data.job);
@@ -110,7 +110,7 @@ const JobDetails = () => {
     
             {/* Apply Button */}
             <div className="mt-8 flex justify-center">
-             {(hasApplied||job?.applications?.length>0 )? ( <button  disabled={true} >
+             {((hasApplied||job?.applications?.length>0))? ( <button  disabled={true} >
                <CustomButtonGreen> Already Applied</CustomButtonGreen>
               </button>) :( <button  >
                <CustomButtonBlue onClick={applyJobs}> Apply Now</CustomButtonBlue>

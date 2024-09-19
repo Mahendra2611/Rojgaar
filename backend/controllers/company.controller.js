@@ -92,7 +92,12 @@ export const updateCompany = async(req,res)=>{
                 message: "Input fiels are not correct"
             })
         }
-    
+       // console.log(req.params.id)
+        if(!req.params.id){
+            return res.status(400).json({
+                message: "Some thing went wrong"
+            })
+        }
         const updateData = {};
         if(name){
             updateData['name'] = name;
@@ -110,7 +115,8 @@ export const updateCompany = async(req,res)=>{
             updateData['logo'] = file.path;
         }
        // console.log(updateData)
-        const company = await Company.findByIdAndUpdate(req.params.id, updateData, { new: true});
+       
+        const company = await Company.findByIdAndUpdate(req.params.id, {$set:updateData}, { new: true});
         //console.log(company)
         if (!company) {
             return res.status(404).json({

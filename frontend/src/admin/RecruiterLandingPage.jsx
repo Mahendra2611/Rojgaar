@@ -26,8 +26,8 @@ const RecruiterLandingPage = () => {
         }
       })
      })
-    console.log(application)
-    console.log(jobs)
+    //console.log(application)
+    //console.log(jobs)
     const handleClick = ()=>{
       navigate("/job/create")
       }

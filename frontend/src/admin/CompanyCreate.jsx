@@ -24,7 +24,7 @@ const navigate = useNavigate();
       const handleFileChange = (e) => {
         const file = e.target.files[0]; 
         const maxSize = 500*1024;
-        console.log(file);
+        //console.log(file);
         if(file && file.size > maxSize){
           toast("File size exceeded")
           return;
@@ -45,9 +45,9 @@ const navigate = useNavigate();
        if(logo){
         formData.append("logo", logo || "");
        }
-        formData.forEach((value,key)=>{
-          console.log(`${key}:${value}`)
-        })
+        // formData.forEach((value,key)=>{
+        //   console.log(`${key}:${value}`)
+        // })
 
         try {
           dispatch(toggleLoader(true));
@@ -60,17 +60,17 @@ const navigate = useNavigate();
             const data = await response.json();
             if (response.ok) {
              
-              console.log(data)
+             // console.log(data)
                
-                console.log("Data received successfully");
+                //console.log("Data received successfully");
                 navigate("/company")
             } else {
               toast.error(data?.message||"company registration failed")
-                console.log("Data couldn't be sent successfully");
+                //console.log("Data couldn't be sent successfully");
             }
         } catch (error) {
           toast.error("Company Registeration Failed")
-            console.log(error);
+            //console.log(error);
         }
         finally{
           dispatch(toggleLoader(false));

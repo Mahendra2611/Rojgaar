@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 const InterSlice = createSlice({
     name:"intern",
     initialState:{
@@ -9,14 +8,14 @@ const InterSlice = createSlice({
     reducers:{
        
         addIntern:(state,action)=>{
-            state.job = action.payload
+            state.intern = action.payload
            
         },
         updateIntern:(state,action)=>{
-            state.job[action.payload.id] = action.payload.data
+            state.intern[action.payload.id] = action.payload.data
         },
         deleteIntern:(state,action)=>{
-            state.job.splice(action.payload,1)
+            state.intern.splice(action.payload,1)
         },
        
     }

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const  JobAppliedTable = ({ job }) => {
   const navigate = useNavigate();
-  return (
+  return job?.length === 0 ? (<h1 className='text-xl text-cyan-500'>You have not applied Yet</h1>):(
     <div className="relative overflow-x-auto shadow-md rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right ">
         <thead className="text-xs md:text-xl font-sans text-black uppercase bg-blue-600">
@@ -16,7 +16,7 @@ const  JobAppliedTable = ({ job }) => {
           </tr>
         </thead>
         <tbody>
-          {job.length>0 &&  job?.map((job, index) => (
+          {job?.length>0 &&  job?.map((job, index) => (
             <tr key={index} className={`font-serif text-xs md:text-lg text-white ${index % 2 === 0 ? 'bg-blue-500 border-b  border-blue-400' : 'bg-blue-600 border-b border-blue-400'}`}>
               <td className="px-1 md:px-6 py-4">{ job?.createdAt?.split('T')[0]}</td>
               <td className="px-6 py-4">{ job?.job?.title}</td>

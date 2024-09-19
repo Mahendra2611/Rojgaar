@@ -4,7 +4,8 @@ const jobSlice = createSlice({
     name:"job",
     initialState:{
         job:[],
-        filter:[]
+        filter:[],
+        appliedJob:[]
     },
     reducers:{
        
@@ -26,8 +27,12 @@ const jobSlice = createSlice({
         },
         removeFilter:(state,action)=>{
             state.filter = state.filter.filter((filter)=>filter !== action.payload.toLowerCase())
-        }
+        },
+        addAppliedJob:(state,action)=>{
+            state.appliedJob = action.payload
+        },
+       
     }
 })
 export default jobSlice.reducer;
-export const {addJob,updateJob,deleteJobb,addFilter,removeFilter} = jobSlice.actions
+export const {addJob,updateJob,deleteJobb,addFilter,removeFilter,addAppliedJob} = jobSlice.actions

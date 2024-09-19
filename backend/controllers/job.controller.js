@@ -7,7 +7,7 @@ try {
     const userId = req.userId
    
     if (!title || !description || !requirements || !salary || !location || !jobType || !experienceLevel || !position ) {
-        console.log("error")
+       // console.log("error")
         return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
             message: "Some Inputs are missing",
             success: false
@@ -162,7 +162,7 @@ export const deleteJob = async(req,res)=>{
        })
   }
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
             message:"something went wrong"
         })

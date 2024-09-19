@@ -10,7 +10,7 @@ const EditAdminProfile= () => {
     const loader = useSelector((state)=>state.loader.loader)
 const dispatch = useDispatch();
 const navigate = useNavigate();
-    console.log(userData)
+   // console.log(userData)
     const [user, setUser] = useState({
         photo: "",
         name: userData?.fullName||"",
@@ -20,7 +20,7 @@ const navigate = useNavigate();
       const handleFileChange = (e) => {
         const file = e.target.files[0]; 
         const maxSize = 500*1024;
-        console.log(file);
+        //console.log(file);
         if(file && file.size > maxSize){
           toast("File size exceeded")
           return;
@@ -66,17 +66,17 @@ const navigate = useNavigate();
             const data = await response.json();
             if (response.ok) {
              
-              console.log(data)
+              //console.log(data)
               dispatch(addUser(data?.user))
-                console.log("Data sent successfully");
+                //console.log("Data sent successfully");
                 navigate("/adminprofile")
             } else {
                 toast.error(data.message)
-                console.log("Data couldn't be sent successfully");
+                //console.log("Data couldn't be sent successfully");
             }
         } catch (error) {
             toast.error("Profile Update Failed !!!")
-            console.log(error);
+            //console.log(error);
         }
         finally{
           dispatch(toggleLoader(false));

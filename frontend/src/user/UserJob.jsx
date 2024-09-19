@@ -5,15 +5,17 @@ import NotFound from './NotFound'
 import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast,ToastContainer } from 'react-toastify'
+import { handleSavee } from './APIreq'
 const UserJob = () => {
     const dispatch = useDispatch();
     const {filter} = useParams();
     const jobsData = useSelector((state)=>state.job.job);
     const [inp,setInp] = useState(filter||"");
+    //console.log(filter)
     const filterData = useMemo(()=>{
         return jobsData?.length>0 && jobsData?.filter((job)=>((job?.company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "" || (job?.title?.toLowerCase().includes(inp?.toLowerCase()))))
       },[inp,jobsData])
-  console.log(filterData)
+  //console.log(filterData)
       function debounce(func,time){
           let timeOutId;
           return (...args)=>{
@@ -27,15 +29,22 @@ const UserJob = () => {
       const handleChange = debounce((value)=>{
         setInp(value);
       },500);
+      const handleSave = async(jobId)=>{
+       const result = await handleSavee(jobId)
+       //console.log(result)
+     
+        toast(result)
+       
+      }
     const getJobs = async()=>{
-        console.log("get job called")
+       // console.log("get job called")
         try {
            const response =  await fetch("http://localhost:3000/job/get",{
             method:"GET",
             credentials:"include",
            })
            const data  = await response.json();
-           console.log(data.job)
+           //console.log(data.job)
            dispatch(addJob(data.job.filter((data)=>data.jobType.includes("Full Time"))));
         } catch (error) {
             toast.error("Something went wrong")
@@ -45,22 +54,22 @@ const UserJob = () => {
         getJobs();  
     },[])
   return (
-    <div className='space-y-5 m-auto'>
-    <div className='flex justify-center items-center px-10 text-black'>
+    <div className='space-y-5 m-auto w-full hide-scrollbar '>
+    <div className='flex justify-center  items-center px-10 text-black hide-scrollbar'>
        <input 
        type='text'
        placeholder='search by name'
        className='px-4 py-2 text-[14px] sm:text-[16px] w-auto rounded-xl text-black '
        onChange={(e)=>{
         handleChange(e.target.value)
-      console.log(e.target.value)
+      //console.log(e.target.value)
       }}
        />
        
       </div>
-      <div className='flex px-5 flex-wrap justify-center items-center gap-10'>
-     {filterData?.length>0 ? (filterData.map((job,index)=>(
-        <JobCard key={index} data={job}/>
+      <div className='flex px-5 flex-wrap  justify-center items-center gap-10 w-full  hide-scrollbar'>
+     {( filterData?.length>0) ? (filterData.map((job,index)=>(
+        <JobCard key={index} data={job} handleSave={handleSave}/>
      ))):((<NotFound/>))}
     </div>
     <ToastContainer

@@ -6,17 +6,17 @@ const ApplicantTable = () => {
     const {jobId} = useParams();
     const [job,setJob] = useState([])
     const handleClick = async(e,id)=>{
-        console.log(e)
-        console.log(id)
+        //console.log(e)
+        //console.log(id)
         let val = e.target.innerHTML;
-        console.log(val)
+        //console.log(val)
         if(val === 'Accept'){
             val = "accepted"
         }
         else{
             val = "rejected"
         }
-        console.log(val)
+        //console.log(val)
         try {
             const response = await fetch(`http://localhost:3000/application/status/${id}/update`,{
                 method:"POST",
@@ -27,12 +27,14 @@ const ApplicantTable = () => {
                 body:JSON.stringify({status:val})
             })
             const data = await response.json();
-            console.log(data);
+           // console.log(data);
             toast(data.message)
+            getApplicants();
           
         } 
         catch (error) {
-            console.log(error)
+           // console.log(error)
+           toast.error("something went wrong")
         }
     }
     const getApplicants = async()=>{
@@ -42,11 +44,12 @@ const ApplicantTable = () => {
                 credentials:"include"
             })
             const data = await response.json();
-            console.log(data.job.applications);
+            //console.log(data.job.applications);
             setJob(data.job.applications)
         } 
         catch (error) {
-            console.log(error)
+            //console.log(error)
+            toast.error("something went wrong")
         }
     }
     useEffect(()=>{

@@ -23,9 +23,9 @@ const Signup = () => {
       const navigate = useNavigate();
 
       const handleSubmit = async(event)=>{
-        console.log("handleSubmit")
+        //console.log("handleSubmit")
         event.preventDefault();
-        console.log(refs.password.current.value)
+       // console.log(refs.password.current.value)
         try {
           const [isEmail,isPassword,isPhone] =  verify(refs.email.current.value,refs.password.current.value,refs.phone.current.value);
         if(!isEmail||!isPassword || !isPhone){
@@ -52,18 +52,20 @@ const Signup = () => {
           body:JSON.stringify(userData)
         })
         const data = await response.json();
-        console.log(data);
-        if(data.success){
-          toast.success(data.message)
-          sessionStorage.clear();
-          disptach(addUser(data.user));
+        //console.log(data);
+        if(data.user.role === "recruiter"){
+          navigate("/admin/home")
+        }
+        else if(data.user.role === "student"){
+          APIreq();
           navigate("/")
         }
         else{
-          toast.error(data.message)
+          navigate("/error")
         }
+       
         } catch (error) {
-          console.log(error);
+          //console.log(error);
           toast.error("Someting went wrong")
         }
         finally{

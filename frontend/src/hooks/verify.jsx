@@ -6,8 +6,8 @@ export const verify = (email,password,phone)=>{
 const isEmail = emailRegex.test(email)
 const isPhone = phoneRegex.test(phone)
 const isPassword = passwordRegex.test(password)
-console.log(password)
-console.log(isPassword)
+//console.log(password)
+//console.log(isPassword)
 return [isEmail,isPassword,isPhone]
 }
 

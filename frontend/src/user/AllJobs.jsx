@@ -10,7 +10,7 @@ const AllJobs = () => {
     const {filter} = useParams();
     const jobsData = useSelector((state)=>state.job.job);
 const filterValue = useSelector((state)=>state.job.filter)
-console.log(filterValue)
+//console.log(filterValue)
    //console.log(jobsData)
     let filterData;
     useMemo(() => {
@@ -23,8 +23,8 @@ console.log(filterValue)
       const industryFilters = filterValue?.filter(f => ["frontend developer", "backend developer", "full stack developer", "data science", "next js", "others"].includes(f));
      
       const jobTypeFilters = filterValue.filter(f => ["full time", "intern"].includes(f));
-  console.log(locationFilters)
-  console.log(industryFilters)
+ // console.log(locationFilters)
+  //console.log(industryFilters)
       filterData = jobsData.filter((job) => {
         const locationMatch = locationFilters?.length === 0 || locationFilters.includes(job.location.toLowerCase());
         const industryMatch = industryFilters?.length === 0 || industryFilters.includes(job.title.toLowerCase());
@@ -34,7 +34,7 @@ console.log(filterValue)
         return locationMatch && industryMatch  && jobTypeMatch;
       });
     }, [jobsData, filterValue]);
-  console.log(filterData)
+  //console.log(filterData)
       function debounce(func,time){
           let timeOutId;
           return (...args)=>{
@@ -49,21 +49,21 @@ console.log(filterValue)
         setInp(value);
       },500);
     const getJobs = async()=>{
-        console.log("get job called")
+        //console.log("get job called")
         try {
            const response =  await fetch("http://localhost:3000/job/get",{
             method:"GET",
             credentials:"include",
            })
            const data  = await response.json();
-           console.log(data.job)
+           //console.log(data.job)
            dispatch(addJob(data.job));
         } catch (error) {
             
         }
     }
     useEffect(()=>{
-      console.log(jobsData)
+     // console.log(jobsData)
         getJobs();
     },[])
   return (

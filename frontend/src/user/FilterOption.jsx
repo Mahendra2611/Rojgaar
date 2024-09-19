@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 const FilterOption = () => {
   const dispatch = useDispatch();
   const addValue = (e)=>{
-    console.log(e)
+    //console.log(e)
     const value = e.target.value;
     dispatch(addFilter(value))
   }

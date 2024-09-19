@@ -1,9 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CustomButtonBlue,CustomButtonGreen } from './CustomButton';
+
 const Home= () => {
   const navigate = useNavigate();
   const searchref = useRef("");
+ 
   return (
 
     <div className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-gray-200 min-h-screen">
@@ -12,7 +14,7 @@ const Home= () => {
         <h1 className="text-2xl  md:text-4xl font-bold mb-4">Find Your Dream Job or Internship</h1>
         <p className="text-lg mb-8">Create a resume in minutes and apply with one click</p>
         <div className='flex gap-2 md:gap-10 justify-center items-center sm:flex-nowrap px-2'>
-         <CustomButtonBlue>Resume Builder</CustomButtonBlue>
+         <CustomButtonBlue onClick={()=>{navigate("/user/resume")}}>Resume Builder</CustomButtonBlue>
           <button onClick={()=>{navigate("/user/jobs")}} ><CustomButtonGreen>Browse Jobs</CustomButtonGreen></button>
         </div>
       </section>
@@ -56,12 +58,12 @@ const Home= () => {
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">Popular Job Categories</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div onClick={()=>{navigate(`/user/jobs/SDE`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Software Engineering</div>
-            <div onClick={()=>{navigate(`/user/jobs/dataScience`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Data Science</div>
-            <div onClick={()=>{navigate(`/user/jobs/marketing}`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Marketing</div>
-            <div onClick={()=>{navigate(`/user/jobs/fullstack`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Full Stack</div>
-            <div onClick={()=>{navigate(`/user/jobs/backend`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Backend</div>
-            <div  onClick={()=>{navigate(`/user/jobs/frontend`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Front end</div>
+            <div onClick={()=>{navigate(`/user/jobs/SDE`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#54f08d,inset_5px_5px_5px_-1px_#238346] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Software Engineering</div>
+            <div onClick={()=>{navigate(`/user/jobs/dataScience`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#54f08d,inset_5px_5px_5px_-1px_#238346] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Data Science</div>
+            <div onClick={()=>{navigate(`/user/jobs/marketing}`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#54f08d,inset_5px_5px_5px_-1px_#238346] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Marketing</div>
+            <div onClick={()=>{navigate(`/user/jobs/fullstack`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#54f08d,inset_5px_5px_5px_-1px_#238346] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Full Stack</div>
+            <div onClick={()=>{navigate(`/user/jobs/backend`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#54f08d,inset_5px_5px_5px_-1px_#238346] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Backend</div>
+            <div  onClick={()=>{navigate(`/user/jobs/frontend`)}} className="bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#54f08d,inset_5px_5px_5px_-1px_#238346] text-slate-700 font-semibold font-serif p-3 md:p-6 rounded-lg ">Front end</div>
           </div>
         </div>
       </section>
@@ -92,15 +94,15 @@ const Home= () => {
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl font-bold mb-8">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-4 md:p-8 rounded-lg bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d]">
+            <div className="p-4 md:p-8 rounded-lg bg-[#3cc56e] shadow-[inset_-10px_-10px_10px_-1px_#54f08d,inset_10px_10px_10px_-1px_#238346]">
               <h3 className="text-xl font-bold mb-4 text-black">Step 1</h3>
               <p>Sign up and create your profile.</p>
             </div>
-            <div className="p-4 md:p-8 rounded-lg bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d]">
+            <div className="p-4 md:p-8 rounded-lg bg-[#3cc56e] shadow-[inset_-10px_-10px_10px_-1px_#54f08d,inset_10px_10px_10px_-1px_#238346]">
               <h3 className="text-xl font-bold mb-4 text-black">Step 2</h3>
               <p>Search for jobs or internships that match your skills.</p>
             </div>
-            <div className="p-4 md:p-8 rounded-lg bg-[#3cc56e] shadow-[inset_-5px_-5px_5px_-1px_#238346,inset_5px_5px_5px_-1px_#54f08d]">
+            <div className="p-4 md:p-8 rounded-lg bg-[#3cc56e] shadow-[inset_-10px_-10px_10px_-1px_#54f08d,inset_10px_10px_10px_-1px_#238346]">
               <h3 className="text-xl font-bold mb-4 text-black">Step 3</h3>
               <p>Apply with one click and track your applications.</p>
             </div>

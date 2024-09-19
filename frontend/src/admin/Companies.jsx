@@ -17,14 +17,14 @@ const Companies = () => {
     const loader = useSelector((state)=>state.loader.loader)
     const dispatch = useDispatch();
     let companiesData = useSelector((state)=>state?.company?.company||[])
-    console.log(companiesData)
+    //console.log(companiesData)
 const handleClick = ()=>{
 navigate("/company/create")
 }
     const filterData = useMemo(()=>{
       return companiesData.length>0 && companiesData.filter((company)=>(company?.name?.toLowerCase().includes(inp?.toLowerCase()))|| inp?.trim() === "")
     },[inp,companiesData])
-console.log(filterData)
+//console.log(filterData)
     function debounce(func,time){
         let timeOutId;
        // console.log("debounced called")
@@ -54,15 +54,15 @@ console.log(filterData)
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data)
+          //console.log(data)
             dispatch(addCompany(data.companies))
-            console.log("Data received successfully");
+            //console.log("Data received successfully");
            
         } else {
-            console.log("Data couldn't be sent successfully");
+            //console.log("Data couldn't be sent successfully");
         }
       } catch (error) {
-        console.log(error)
+       // console.log(error)
       }
       finally{
         dispatch(toggleLoader(false));
@@ -70,8 +70,8 @@ console.log(filterData)
       }
     }
     const deleteCompany = async(id,index) => {
-      console.log(id)
-      console.log(index)
+      //console.log(id)
+      //console.log(index)
       try {
          const response = await fetch(`http://localhost:3000/company/deletecompany/${id}`,{
              method:"DELETE",
@@ -100,9 +100,9 @@ console.log(filterData)
       setisModal(false);
      }
     useEffect(()=>{
-      if(companiesData?.length === 0){
+     
         getData();
-      }
+      
     },[])
   return loader?<Loader/>:(
     <div className='space-y-5'>

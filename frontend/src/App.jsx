@@ -24,90 +24,127 @@ import AdminProtected from "./admin/AdminProtected"
 import Logout from "./components/Logout"
 import RecruiterLandingPage from "./admin/RecruiterLandingPage"
 import InternShip from "./user/InternShip"
+import Error from "./components/Error"
+import SavedJob from "./user/SavedJob"
+import CommingSoon from "./components/CommingSoon"
 function App() {
 const AppRouter = createBrowserRouter([
   {
   path:"/",
   element:<Parent/>,
+  errorElement:<Error/>,
   children:[
     {
       path:"/",
-      element:<Home/>
+      element:<Home/>,
+      errorElement:<Error/>,
     },
     {
       path:"profile",
-      element:<Profile/>
+      element:<Profile/>,
+      errorElement:<Error/>,
     },
     {
       path:"admin/home",
-      element:<AdminProtected><RecruiterLandingPage/></AdminProtected>
+      element:<AdminProtected><RecruiterLandingPage/></AdminProtected>,
+      errorElement:<Error/>,
     },
 
     {
       path:"adminprofile",
-      element:<AdminProtected><AdminProfile/></AdminProtected>
+      element:<AdminProtected><AdminProfile/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"editprofile",
-      element:<EditProfile/>
+      element:<EditProfile/>,
+      errorElement:<Error/>,
     },
     {
       path:"editadminprofile",
-      element:<AdminProtected><EditAdminProfile/></AdminProtected>
+      element:<AdminProtected><EditAdminProfile/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"company",
-      element:<AdminProtected><Companies/></AdminProtected>
+      element:<AdminProtected><Companies/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"/company/create",
-      element:<AdminProtected><CompanyCreate/></AdminProtected>
+      element:<AdminProtected><CompanyCreate/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"/company/update/:id",
-      element:<AdminProtected><CompanyUpdate/></AdminProtected>
+      element:<AdminProtected><CompanyUpdate/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"job",
-      element:<AdminProtected><Job/></AdminProtected>
+      element:<AdminProtected><Job/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"/job/create",
-      element:<AdminProtected><JobCreate/></AdminProtected>
+      element:<AdminProtected><JobCreate/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"/job/update/:id",
-      element:<AdminProtected><JobUpdate/></AdminProtected>
+      element:<AdminProtected><JobUpdate/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"/job/applicant/:jobId",
-      element:<AdminProtected><ApplicantTable/></AdminProtected>
+      element:<AdminProtected><ApplicantTable/></AdminProtected>,
+      errorElement:<Error/>,
     },
     {
       path:"user/jobs/:filter?",
-      element:<UserJob/>
+      element:<UserJob/>,
+      errorElement:<Error/>,
     },
     {
       path:"user/jobs/deatils/:id",
-      element:<JobDetails/>
+      element:<JobDetails/>,
+      errorElement:<Error/>,
     },
     {
       path:"user/intern",
-      element:<InternShip/>
+      element:<InternShip/>,
+      errorElement:<Error/>,
     },
+    {
+      path:"user/savedjobs",
+      element:<SavedJob/>,
+      errorElement:<Error/>,
+    },{
+      path:"/user/resume",
+      element:<CommingSoon/>,
+      errorElement:<Error/>
+    }
+   
   ]
 },
 {
   path:"/signup",
-  element:<Signup/>
+  element:<Signup/>,
+  errorElement:<Error/>,
 },
 {
   path:"/signin",
-  element:<Signin/>
+  element:<Signin/>,
+  errorElement:<Error/>,
+},
+{
+  path:"/error",
+  element:<Error/>
 },
 {
   path:"/logout",
-  element:<Logout/>
+  element:<Logout/>,
+  errorElement:<Error/>,
 }
 ])
   return (

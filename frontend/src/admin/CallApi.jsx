@@ -4,7 +4,7 @@ import { addJob } from '../redux/JobSlice';
 import { ToastContainer,toast } from 'react-toastify';
 import { toggleLoader } from '../redux/loaderSlice';
 const CallApi = () => {
-    console.log("api caled")
+    //console.log("api caled")
     const dispatch = useDispatch();
     async function getData1() {
         try {
@@ -20,8 +20,8 @@ const CallApi = () => {
           const data = await response.json();
           if (response.ok) {
               dispatch(addJob(data?.jobs))
-              console.log(data.jobs)
-              console.log("Data received successfully");
+              //console.log(data.jobs)
+             // console.log("Data received successfully");
              
           } else {
               toast.error(data.message)
@@ -46,15 +46,17 @@ const CallApi = () => {
   
           if (response.ok) {
             const data = await response.json();
-            console.log(data)
+            //console.log(data)
               dispatch(addCompany(data.companies))
-              console.log("Data received successfully");
+              //console.log("Data received successfully");
              
           } else {
-              console.log("Data couldn't be sent successfully");
+            toast.error("Something went wrong !!!")
+              //console.log("Data couldn't be sent successfully");
           }
         } catch (error) {
-          console.log(error)
+          toast.error("Something went wrong !!!")
+         // console.log(error)
         }
         finally{
           dispatch(toggleLoader(false));
@@ -66,7 +68,20 @@ const CallApi = () => {
         getData2();
       },[])
   return (
-   <></>
+   <>
+     <ToastContainer
+position="top-right"
+autoClose={4000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover={false}
+theme="light"
+
+/></>
   )
 }
 

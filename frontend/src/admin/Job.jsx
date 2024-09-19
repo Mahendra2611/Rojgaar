@@ -55,7 +55,7 @@ console.log(filterData)
         const data = await response.json();
         if (response.ok) {
             dispatch(addJob(data?.jobs))
-            console.log("Data received successfully");
+           // console.log("Data received successfully");
            
         } else {
             toast.error(data.message)

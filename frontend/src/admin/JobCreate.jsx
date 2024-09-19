@@ -34,7 +34,7 @@ const navigate = useNavigate();
           const val = job[key]?.current?.value||""
           if(["salary","position","exp"].includes(key)){
             if(!checkNumber(val)){
-              console.log(val)
+              //console.log(val)
               toast.error("Input Fiels are Incorrect")
               return;
             }
@@ -44,7 +44,7 @@ const navigate = useNavigate();
           }
           else{
             if(!checkString(val)){
-              console.log(val)
+              //console.log(val)
               toast.error("Input Fiels are Incorrect")
               return;
             }
@@ -60,7 +60,7 @@ const navigate = useNavigate();
         formData["jobType"]= job?.jobType?.current?.value || "";
         formData["position"]=  job?.position?.current?.value || "";
         // formData.append("company",  job?.company?.current?.value || "");
-        console.log(formData)
+       // console.log(formData)
 
         try {
           dispatch(toggleLoader(true));
@@ -76,17 +76,17 @@ const navigate = useNavigate();
             const data = await response.json();
             if (response.ok) {
              
-              console.log(data.job)
+              //console.log(data.job)
               
-                console.log("Data received successfully");
+                //console.log("Data received successfully");
                 navigate("/job")
             } else {
               toast.error(data.message)
-                console.log("Data couldn't be sent successfully");
+                //console.log("Data couldn't be sent successfully");
             }
         } catch (error) {
           toast.error("Something went wrong")
-            console.log(error);
+            //console.log(error);
         }
         finally{
           dispatch(toggleLoader(false));
