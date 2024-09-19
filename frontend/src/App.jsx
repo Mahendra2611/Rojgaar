@@ -1,6 +1,6 @@
 
 import { createBrowserRouter,RouterProvider } from "react-router-dom"
-import Signup from "./components/SIgnup"
+import Signup from "./components/Signup"
 import Signin from "./components/Signin"
 import Home from "./components/Home"
 import Loader from "./components/Loader"
