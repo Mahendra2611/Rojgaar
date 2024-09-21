@@ -3,12 +3,12 @@ import { useRef } from 'react';
 import { verify } from '../hooks/verify';
 import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { USER_END_POINT } from '../utils/constants';
 import Loader from './Loader';
 import { toggleLoader } from '../redux/loaderSlice';
-import { addUser } from '../redux/userSlice';
 import { useDispatch ,useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { END_POINT } from '../utils/constants';
+import { addUser } from '../redux/userSlice';
 const Signup = () => {
     const refs = {
         name: useRef(null),
@@ -18,7 +18,7 @@ const Signup = () => {
         role: useRef(null),
       };
 
-      const disptach = useDispatch();
+      const dispatch = useDispatch();
       const loader = useSelector((state)=>state.loader.loader)
       const navigate = useNavigate();
 
@@ -42,34 +42,41 @@ const Signup = () => {
           phoneNumber:refs.phone.current.value,
           role:refs.role.current.value
         }
-        disptach(toggleLoader(true));
-       const response = await fetch("https://rojgaar-wm0j.onrender.com/user/register",{
+        dispatch(toggleLoader(true));
+       const response = await fetch(`${END_POINT}/user/register`,{
           method:"POST",
+          credentials: "include",
           headers:{
             "Content-Type":"application/json",
-            
+          
           },
           body:JSON.stringify(userData)
         })
         const data = await response.json();
-        //console.log(data);
+        console.log(data);
+      if(response.ok){
+        sessionStorage.clear();
+        dispatch(addUser(data.user));
         if(data.user.role === "recruiter"){
           navigate("/admin/home")
         }
         else if(data.user.role === "student"){
-          APIreq();
           navigate("/")
         }
         else{
           navigate("/error")
         }
+      }
+      else{
+        toast.error(data.message)
+      }
        
         } catch (error) {
-          //console.log(error);
-          toast.error("Someting went wrong")
+         // console.log(error);
+          toast.error(data.message)
         }
         finally{
-          disptach(toggleLoader(false))
+          dispatch(toggleLoader(false))
           
         }
       }
@@ -156,6 +163,10 @@ const Signup = () => {
             Sign Up
           </button>
         </div>
+        <div className="text-white text-[14px] cursor-pointer underline md:text-[16px] flex justify-between items-center">
+            <h1 onClick={()=>{navigate("/signin")}}>Sign In</h1>
+           
+          </div>
       </div>
       <ToastContainer
 position="top-right"

@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { ToastContainer,toast } from 'react-toastify'
+import { END_POINT } from '../utils/constants';
+import { removeUser } from '../redux/userSlice';
+import { useDispatch } from 'react-redux';
+
 const Logout = () => {
     const [msg,setMsg] = useState("");
+    const dispatch = useDispatch();
     const getLogOut = async()=>{
         try {
-            const response = await fetch("https://rojgaar-wm0j.onrender.com/user/logout", {
+            const response = await fetch(`${END_POINT}/user/logout`, {
                 method: "GET",
                 credentials: "include",
         })
-        const result= await response.json();
-        if(result.success){
+        
+        if(response.ok){
             toast.success("user logged out successfully")
-            setMsg("User logged out successfully")
             sessionStorage.clear()
+            dispatch(removeUser());
+            setMsg("User logged out successfully")
+            
+            
         }
         else{
             setMsg("log out failed")
@@ -40,6 +48,7 @@ pauseOnFocusLoss
 draggable
 pauseOnHover={false}
 theme="light"
+
 
 />
     </div>

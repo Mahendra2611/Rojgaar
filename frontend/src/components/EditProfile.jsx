@@ -6,6 +6,7 @@ import { addUser } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { CustomButtonBlue } from './CustomButton';
 import Loader from './Loader';
+import { END_POINT } from '../utils/constants';
 const EditProfile= () => {
     const userData = useSelector((state)=>state?.user?.user)
     const loader = useSelector((state)=>state?.loader?.loader||false)
@@ -93,7 +94,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
           //console.log("request send")
-            const response = await fetch("https://rojgaar-wm0j.onrender.com/user/profile/update", {
+            const response = await fetch(`${END_POINT}/user/profile/update`, {
                 method: "POST",
                 credentials: "include",
                 body: formData
@@ -120,7 +121,7 @@ dispatch(addUser(data.user))
     
       return loader ? <Loader/>:(
         
-        <div className="p-6 max-w-lg mx-auto text-white bg-[#0f172a rounded-lg shadow-lg">
+        <div className="p-6 max-w-lg mx-auto text-white bg-[#0f172a] rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-6">Edit Profile</h2>
           <form onSubmit={handleSubmit} className="space-y-4 text-white">
   <div>

@@ -1,9 +1,6 @@
 import { Company } from "../models/company.model.js";
-import { validationResult } from "express-validator";
 export const registerCompany = async(req,res)=>{
-    
-   
-    
+    console.log("register company ")
     const { name, description, website, location } = req.body;
     if (!name || !description || !website ||!location ) {
         return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
@@ -11,7 +8,7 @@ export const registerCompany = async(req,res)=>{
         })
     }
     const file = req.file;
-    //console.log(file)
+    console.log(file)
     const userId = req.userId
     try {
         // const company = await Company.findOne({userId:userId});
@@ -39,24 +36,31 @@ export const registerCompany = async(req,res)=>{
             company: companyData
         })
     } catch (error) {
-        //console.log(error)
-        return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
-            message: "company registeration failed"
-        })
+        if (error.name === 'MongooseError' && error.message.includes('buffering timed out')) {
+            return res.status(503).json({
+              success: false,
+              message: "Database connection timeout. Please check your internet connection or try again later.",
+            });
+          } else {
+            return res.status(500).json({
+              success: false,
+              message: "An error occurred while processing your request.",
+            });
     }
+}
 }
 export const getCompany = async(req,res)=>{
 try {
     const userId = req.userId;
-    const company =await Company.find({userId:userId},{userId:0});
-    //console.log(company)
+    const company = await Company.find({userId:userId},{userId:0});
+    console.log(company)
     return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
         companies:company
     })
 } catch (error) {
-    //console.log(error);
+    console.log(error);
     return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
-        message: "company searching failed"
+        message: "Server Error"
     })
 }
 }

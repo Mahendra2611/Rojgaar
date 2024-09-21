@@ -5,7 +5,13 @@ try {
    
     const { title, description, requirements, salary, location, jobType, experienceLevel, position } = req.body;
     const userId = req.userId
-   
+   if(!userId){
+   // console.log("error")
+    return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
+        
+        message:"Admin error occured"
+    })
+   }
     if (!title || !description || !requirements || !salary || !location || !jobType || !experienceLevel || !position ) {
        // console.log("error")
         return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
@@ -15,7 +21,12 @@ try {
     }
    
     const companyId = await Company.findOne({userId:userId})
-   
+   if(!companyId){
+   // console.log("error")
+    return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
+        message:"Company doesn't exist"
+    })
+   }
     const job = await Job.create({
         title,
         description,
@@ -29,7 +40,7 @@ try {
         created_by: userId
     })
     return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
-        message:"JOb created successfully",
+        message:"Job created successfully",
         job:job
     })
 } catch (error) {
@@ -63,7 +74,14 @@ try {
 export const getAdminJobs = async(req,res)=>{
    try {
     const adminId = req.userId;
-
+    console.log("get admin")
+    if(!adminId){
+        return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
+            message: "Admin Id required",
+            success: false
+        })
+    }
+    
     const job = await Job.find({ created_by: adminId })
     .populate({
         path:'company',
@@ -74,6 +92,7 @@ export const getAdminJobs = async(req,res)=>{
         select:"status"
     })
     .sort({ createdAt: -1 });
+    console.log(job)
     if (!job) {
         return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
             message: "Jobs not found.",
@@ -86,8 +105,9 @@ export const getAdminJobs = async(req,res)=>{
         success: true
     })
    } catch (error) {
+    console.log(error)
     return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).josn({
-        message:"Get admin job failed"
+        message:"Server Error"
     })
    }
 
@@ -131,7 +151,18 @@ try {
             success: false
         })
     }
-   const newData = await Job.findByIdAndUpdate(id,req.body,{new:true})
+    const updateData = {
+        title,
+        description,
+        requirements:requirements.split(","),
+        salary:Number(salary),
+        location,
+        jobType,
+        experienceLevel: experienceLevel,
+        position,
+        
+    }
+   const newData = await Job.findByIdAndUpdate(id,updateData,{new:true})
    return res.status(200).json({
     message:"Data update successfully",
     success:true,

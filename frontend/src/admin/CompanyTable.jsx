@@ -19,7 +19,7 @@ const CompanyTable = ({ companies,deleteCompnay }) => {
         <tbody>
           {companies &&  companies?.map((company, index) => (
             <tr key={index} className={index % 2 === 0 ? 'bg-blue-500 border-b text-[14px] md:text-[16px] border-blue-400' : 'bg-blue-600 border-b border-blue-400'}>
-              <td className="px-6 py-4"><img className='w-auto h-auto max-w-[80px] max-h-[80px] rounded-full ' src={company?.logo} alt='logo'/></td>
+              <td className="px-6 py-4"><img className='w-auto h-auto max-w-[100px] max-h-[100px] object-contain rounded-full ' src={company?.logo} alt='logo'/></td>
               <td className="px-6 py-4 text-[16px]">{ company?.name}</td>
               <td className=" px-0 mdpx-6 py-4">{ company?.createdAt?.split('T')[0]
               }</td>

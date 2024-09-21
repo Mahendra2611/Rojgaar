@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import LOGO from "../assets/logo.jpg"
 import { CustomButtonBlue } from './CustomButton';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,9 +15,9 @@ const user = useSelector((state)=>state.user.user)
     <nav className="bg-gray-800 p-4 mb-4 w-full ">
       <div className="max-w-7xl  mx-auto flex items-center justify-between">
         <img
-          src="https://flowbite.com/docs/images/logo.svg"
+          src={LOGO}
           alt="Logo"
-          className="h-8"
+          className="h-12 rounded-full"
         />
         
         <div className="flex items-center">

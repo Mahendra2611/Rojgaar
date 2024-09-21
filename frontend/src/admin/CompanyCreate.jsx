@@ -6,7 +6,8 @@ import { addCompany } from '../redux/companySlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { CustomButtonBlue } from '../components/CustomButton';
-import CallApi from './CallApi';
+import { fun } from './CallApi';
+import { END_POINT } from '../utils/constants';
 
 const CompanyCreate = () => {
    const [logo,setLogo] = useState();
@@ -52,7 +53,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
          
-            const response = await fetch("https://rojgaar-wm0j.onrender.com/company/register", {
+            const response = await fetch(`${END_POINT}/company/register`, {
                 method: "POST",
                 credentials: "include",
                 body: formData
@@ -74,7 +75,7 @@ const navigate = useNavigate();
         }
         finally{
           dispatch(toggleLoader(false));
-          CallApi()
+         
         }
     };
     
@@ -140,9 +141,9 @@ const navigate = useNavigate();
 
   <button
     type="submit"
-   
+   className="text-white rounded-xl py-2 px-4 bg-[#3968ad] shadow-[inset_5px_5px_5px_-1px_#264d88,inset_-5px_-5px_5px_-1px_#5c88ca]"
   >
-    <CustomButtonBlue>Register Company</CustomButtonBlue>
+   Register Compnay
   </button>
 </form>
 

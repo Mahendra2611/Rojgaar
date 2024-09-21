@@ -9,6 +9,7 @@ import { addCompany ,deleteComanyy} from '../redux/companySlice';
 import DeleteConfirmation from './DeleteConfirmation';
 import { ToastContainer,toast } from 'react-toastify';
 import { CustomButtonGreen } from '../components/CustomButton';
+import { END_POINT } from '../utils/constants';
 const Companies = () => {
     const [inp,setInp] = useState("");
     const [isModal,setisModal] = useState(false);
@@ -46,7 +47,7 @@ navigate("/company/create")
       try {
         dispatch(toggleLoader(true));
          
-        const response = await fetch("https://rojgaar-wm0j.onrender.com/company/get", {
+        const response = await fetch(`${END_POINT}/company/get`, {
             method: "GET",
             credentials: "include",
            
@@ -73,7 +74,7 @@ navigate("/company/create")
       //console.log(id)
       //console.log(index)
       try {
-         const response = await fetch(`https://rojgaar-wm0j.onrender.com/company/deletecompany/${id}`,{
+         const response = await fetch(`${END_POINT}/company/deletecompany/${id}`,{
              method:"DELETE",
              credentials:"include"
          })

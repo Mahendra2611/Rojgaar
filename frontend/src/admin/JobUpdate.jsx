@@ -7,7 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { checkNumber ,checkString} from '../hooks/check';
 import { CustomButtonBlue } from '../components/CustomButton';
-import CallApi from './CallApi';
+import { END_POINT } from '../utils/constants';
+
 
 const JobUpdate = () => {
   const {id} = useParams();
@@ -16,15 +17,14 @@ const dispatch = useDispatch();
 const navigate = useNavigate();
    const jobData = useSelector((state)=>state.job.job)
     const [job,setJob] = useState({
-        title: jobData[id].title,
-        req: jobData[id].requirements.join(","),
-        description:jobData[id].description,
-        location: jobData[id].location,
-        salary: jobData[id].salary,
-        jobType:jobData[id].jobType,
-        exp: jobData[id].experienceLevel,
-        position: jobData[id].position,
-       
+        title: jobData[id]?.title||"",
+        req: jobData[id]?.requirements.join(",")||"",
+        description:jobData[id]?.description||"",
+        location: jobData[id]?.location||"",
+        salary: jobData[id]?.salary||"",
+        jobType:jobData[id].jobType||"",
+        exp: jobData[id]?.experienceLevel||"",
+        position: jobData[id]?.position||"",
       });
      
     const handleChange = (e)=>{
@@ -38,20 +38,21 @@ const navigate = useNavigate();
       const handleSubmit = async (e) => {
         e.preventDefault();
         for(const key in job){
-          const val = job[key]||""
-          if(["salary","position","exp"].includes(key)){
+          const val = job[key]||"";
+          console.log(`${key}->${val}`)
+          if(["req","description"].includes(key)){
+            continue;
+           }
+          else if(["salary","position","exp"].includes(key)){
             if(!checkNumber(val)){
-              //console.log(val)
+              console.log(val)
               toast.error("Input Fiels are Incorrect")
               return;
             }
           }
-          else if(["req","description"].includes(key)){
-           continue;
-          }
           else{
             if(!checkString(val)){
-              //console.log(val)
+              console.log(val)
               toast.error("Input Fiels are Incorrect")
               return;
             }
@@ -71,7 +72,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
          //console.log(jobData[id]._id)
-            const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/update?id=${jobData[id]._id}`, {
+            const response = await fetch(`${END_POINT}/job/update?id=${jobData[id]._id}`, {
                 method: "POST",
                 credentials: "include",
                 headers:{
@@ -98,7 +99,7 @@ const navigate = useNavigate();
         }
         finally{
           dispatch(toggleLoader(false));
-          CallApi();
+          
         }
     };
     
@@ -133,7 +134,7 @@ const navigate = useNavigate();
     <label className="block text-xs md:text-[16px] text-lime-500">Requirements</label>
     <input
       type="text"
-      name="requirements"
+      name="req"
       value={job.req}
       onChange={handleChange}
       className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
@@ -180,7 +181,7 @@ const navigate = useNavigate();
       <label className="block text-xs md:text-[16px] text-lime-500">Experience Level</label>
       <input
         type="number"
-        name="experience"
+        name="exp"
         value={job.exp}
         onChange={handleChange}
         className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
@@ -201,8 +202,8 @@ const navigate = useNavigate();
     </div>
   </div>
 
-  <button type="submit">
-   <CustomButtonBlue>Update Job</CustomButtonBlue>
+  <button type="submit" className="text-white rounded-xl py-2 px-4 bg-[#3968ad] shadow-[inset_5px_5px_5px_-1px_#264d88,inset_-5px_-5px_5px_-1px_#5c88ca]">
+   Update Job
   </button>
 </form>
 

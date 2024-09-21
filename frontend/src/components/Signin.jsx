@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { toggleLoader } from "../redux/loaderSlice"; // Assuming you have these actions defined
-import { addUser } from "../redux/userSlice"; // Assuming you have these actions defined
+import { toggleLoader } from "../redux/loaderSlice"; 
+import { addUser } from "../redux/userSlice"; 
 import { verify } from "../hooks/verify";
 import Loader from "./Loader";
 const Signin = () => {
@@ -31,12 +31,12 @@ const Signin = () => {
       const userData = {
         email,
         password,
-        role,
+        role:role.toLowerCase(),
       };
 //console.log(userData)
       dispatch(toggleLoader(true));
 
-      const response = await fetch("https://rojgaar-wm0j.onrender.com/user/login", {
+      const response = await fetch("http://localhost:3000/user/login", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -55,7 +55,7 @@ const Signin = () => {
         } else if (data.user.role === "student") {
           navigate("/");
         } else {
-          navigate("/error");
+          toast.error(data.message);
         }
       } else {
         toast.error(data.message);
@@ -119,6 +119,10 @@ const Signin = () => {
               <option value="student">Student</option>
               <option value="recruiter">Recruiter</option>
             </select>
+          </div>
+          <div className="text-white text-[14px] cursor-pointer underline md:text-[16px] flex justify-between items-center">
+            <h1 onClick={()=>{navigate("/signup")}}>Sign up</h1>
+            <h1>Forget password</h1>
           </div>
         </div>
         <div className="mt-4">

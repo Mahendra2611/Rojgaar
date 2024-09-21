@@ -113,11 +113,11 @@ const Home= () => {
       {/* Footer */}
       <footer className="bg-gray-800 py-10 px-6 text-center">
         <div className="max-w-6xl mx-auto">
-          <p>&copy; {new Date().getFullYear()} Job Hunt Platform. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Rojgaar Platform. All Rights Reserved.</p>
           <div className="flex justify-center space-x-4 mt-4">
-            <a href="#" className="text-blue-400">LinkedIn</a>
-            <a href="#" className="text-blue-400">Twitter</a>
-            <a href="#" className="text-blue-400">Facebook</a>
+            <a href="https://www.linkedin.com/in/mahendra-pratap-verma-559b81257" className="text-blue-400">LinkedIn</a>
+            <a href="https://www.instagram.com/mahendra_123.p/" className="text-blue-400">Instagram</a>
+           
           </div>
         </div>
       </footer>

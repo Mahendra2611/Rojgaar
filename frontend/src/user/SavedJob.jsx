@@ -3,6 +3,7 @@ import JobCard from './JobCardd';
 import { handleRemovee } from './APIreq';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify';
+import { END_POINT } from '../utils/constants';
 const SavedJob = () => {
     const [job,setJob] = useState([]);
     const jobs = useSelector((state)=>state.job.job)
@@ -27,7 +28,7 @@ const SavedJob = () => {
         }
     const getSaved = async()=>{
         try {
-            const response =  await fetch(`https://rojgaar-wm0j.onrender.com/savelater/get`,{
+            const response =  await fetch(`${END_POINT}/savelater/get`,{
               method:"GET",
               credentials:"include",
              })

@@ -12,11 +12,11 @@ export const loginSchema = {
             }
         }
     },
-    // role:{
-    //     notEmpty:true,
-    //     isString:true,
-    //     matches:{
-    //         options:/^student$|^recuiter$/
-    //     }
-    // }
+    role:{
+        notEmpty:true,
+        isString:true,
+        matches:{
+            options:/^student$|^recruiter$/
+        }
+    }
 }

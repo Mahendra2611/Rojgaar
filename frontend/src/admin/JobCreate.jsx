@@ -8,7 +8,8 @@ import Loader from '../components/Loader';
 import { CustomButtonBlue } from '../components/CustomButton';
 import { checkString } from '../hooks/check';
 import { checkNumber } from '../hooks/check';
-import CallApi from './CallApi';
+
+import { END_POINT } from '../utils/constants';
 const JobCreate = () => {
   
   const loader = useSelector((state)=>state.loader.loader)
@@ -60,12 +61,14 @@ const navigate = useNavigate();
         formData["jobType"]= job?.jobType?.current?.value || "";
         formData["position"]=  job?.position?.current?.value || "";
         // formData.append("company",  job?.company?.current?.value || "");
-       // console.log(formData)
-
+        console.log(formData)
+        // formData.forEach((value,key)=>{
+        //   console.log(`${key}:${value}`)
+        // })
         try {
           dispatch(toggleLoader(true));
          
-            const response = await fetch("https://rojgaar-wm0j.onrender.com/job/post", {
+            const response = await fetch(`${END_POINT}/job/post`, {
                 method: "POST",
                 credentials: "include",
                 headers:{
@@ -74,6 +77,7 @@ const navigate = useNavigate();
                 body: JSON.stringify(formData)
             });
             const data = await response.json();
+           // console.log(object)
             if (response.ok) {
              
               //console.log(data.job)
@@ -90,7 +94,7 @@ const navigate = useNavigate();
         }
         finally{
           dispatch(toggleLoader(false));
-          CallApi()
+          
         }
     };
     
@@ -154,12 +158,13 @@ const navigate = useNavigate();
     </div>
     <div>
       <label className="block text-xs md:text-[16px] text-lime-500">Job Type</label>
-      <input
-        type="text"
-        name="jobType"
-        ref={job.jobType}
-        className="w-full text-xs md:text-[16px] my-1 h-8 md:h-10 p-2 border rounded bg-[#213155] text-white"
-      />
+     <select className="w-full text-xs md:text-[16px] my-1  h-8 md:h-10 p-2 border rounded bg-[#213155] text-white"
+     id='jobType'
+     ref={job.jobType}>
+      <option defaultChecked disabled>Select Job Type</option>
+      <option value="Full Time">Full Time</option>
+      <option value="Intern">Intern</option>
+     </select>
     </div>
   </div>
 
@@ -187,9 +192,9 @@ const navigate = useNavigate();
   {/* Submit button */}
   <button
     type="submit"
-   className='w-full'
+   className="text-white  rounded-xl py-2 px-4 bg-[#3968ad] shadow-[inset_5px_5px_5px_-1px_#264d88,inset_-5px_-5px_5px_-1px_#5c88ca]"
   >
-   <CustomButtonBlue>Create</CustomButtonBlue>
+   Create
   </button>
 </form>
 

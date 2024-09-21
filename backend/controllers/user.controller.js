@@ -36,18 +36,26 @@ export const register = async (req, res) => {
         const jwtToken = jwt.sign({
             user: {
                 userId: userData._id,
+                userRole:userData.role,
             }
         },
             process.env.JWT_SECRET_KEY)
-
-        return res.status(200).cookie('access-key', jwtToken, { maxAge: 1*24*60*60*1000, httpOnly: true, sameSite: 'strict' }).json({
+            //console.log(jwtToken)
+        return res.status(200)
+        .cookie('access-key', jwtToken, {
+            sameSite: 'None',
+            secure: true, 
+            httpOnly: true, 
+          })
+          .json({
             message: "user registered in successfully",
             success: true,
-            user: userData
+            user: userData,
+            
         })
     } catch (error) {
        // console.log(error)
-        return res.status(400).json({
+        return res.status(500).json({
             message: "user registeration failed",
             success:false
         })
@@ -72,13 +80,7 @@ export const login = async (req, res) => {
                 success: false
             })
         }
-        if (user.email !== email) {
-            return res.status(400).json({
-                message: "Incorrect Email",
-                success: false
-            })
-        }
-        if (user.role !== ("student"||"recruiter")) {
+        if (user.role !== role) {
           return res.status(400).json({
               message: "Incorrect Input Fields",
               success: false
@@ -119,8 +121,8 @@ export const login = async (req, res) => {
                 user: user
             });
     } catch (error) {
-        //console.log(error)
-        return res.status(400).json({
+        console.log(error)
+        return res.status(500).json({
             message: "user log in failed"
         })
     }
@@ -134,7 +136,7 @@ export const logout = (req, res) => {
         })
     } catch (error) {
         //console.log(error)
-        return res.status(400).json({
+        return res.status(500).json({
             message: "user log out failed",
           
         })

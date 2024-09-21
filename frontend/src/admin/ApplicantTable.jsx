@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast,ToastContainer } from 'react-toastify';
+import { END_POINT } from '../utils/constants';
 
 const ApplicantTable = () => {
     const {jobId} = useParams();
@@ -18,7 +19,7 @@ const ApplicantTable = () => {
         }
         //console.log(val)
         try {
-            const response = await fetch(`https://rojgaar-wm0j.onrender.com/application/status/${id}/update`,{
+            const response = await fetch(`${END_POINT}/status/${id}/update`,{
                 method:"POST",
                 credentials:"include",
                 headers:{
@@ -39,7 +40,7 @@ const ApplicantTable = () => {
     }
     const getApplicants = async()=>{
         try {
-            const response = await fetch(`https://rojgaar-wm0j.onrender.com/application/${jobId}/applicants`,{
+            const response = await fetch(`${END_POINT}/application/${jobId}/applicants`,{
                 method:"GET",
                 credentials:"include"
             })

@@ -7,7 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 import { updateCompany } from '../redux/companySlice';
 import { CustomButtonBlue } from '../components/CustomButton';
-import CallApi from './CallApi';
+import { fun } from './CallApi';
+import { END_POINT } from '../utils/constants';
 const CompanyUpdate = () => {
    const {id} = useParams();
    const loader = useSelector((state)=>state.loader.loader)
@@ -64,7 +65,7 @@ const CompanyUpdate = () => {
          try {
            dispatch(toggleLoader(true));
           
-             const response = await fetch(`https://rojgaar-wm0j.onrender.com/company/update/${companiesData[id]._id}`, {
+             const response = await fetch(`${END_POINT}/company/update/${companiesData[id]._id}`, {
                  method: "POST",
                  credentials: "include",
                  body: formData
@@ -155,9 +156,9 @@ const CompanyUpdate = () => {
 
   <button
     type="submit"
-   className='flex justify-center items-center'
+   className="text-white rounded-xl py-2 px-4 bg-[#3968ad] shadow-[inset_5px_5px_5px_-1px_#264d88,inset_-5px_-5px_5px_-1px_#5c88ca]"
   >
-<CustomButtonBlue>Update Company</CustomButtonBlue>
+Update Company
   </button>
 </form>
 

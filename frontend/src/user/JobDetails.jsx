@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { ToastContainer,toast } from 'react-toastify';
 import {CustomButtonBlue,CustomButtonGreen} from "../components/CustomButton"
+import { END_POINT } from '../utils/constants';
 const JobDetails = () => {
     const {id} = useParams();
     const [job,setJob] = useState({});
@@ -24,7 +25,7 @@ const JobDetails = () => {
         return;
       }
         try {
-            const response = await fetch(`https://rojgaar-wm0j.onrender.com/application/apply/${id}`,{
+            const response = await fetch(`${END_POINT}/application/apply/${id}`,{
                 method:"GET",
                 credentials:"include",
 
@@ -44,7 +45,7 @@ const JobDetails = () => {
     }
     const getDetails = async()=>{
         try {
-            const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/get/${id}`,{
+            const response = await fetch(`${END_POINT}/job/get/${id}`,{
                 method:"GET",
                 credentials:"include",
 

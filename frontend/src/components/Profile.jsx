@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify';
 import JobAppliedTable from './JobAppliedTable';
+import { END_POINT } from '../utils/constants';
 
 
 const Profile = () => {
@@ -31,7 +32,7 @@ const handleEdit = ()=>{
 }
 const getJobsApplied = async()=>{
   try {
-    const response = await fetch("https://rojgaar-wm0j.onrender.com/application/get",{
+    const response = await fetch(`${END_POINT}/application/get`,{
       method:"GET",
       credentials:"include"
     })

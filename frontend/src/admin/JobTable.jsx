@@ -6,7 +6,7 @@ const JobTable = ({ job ,deleteJob}) => {
   const navigate = useNavigate();
   return (
     <div className="relative overflow-x-scroll shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-blue-100 dark:text-blue-100">
+      <table className="w-full text-sm  rtl:text-right text-blue-100 dark:text-blue-100">
         <thead className="text-xs text-white uppercase bg-blue-600 dark:text-white">
           <tr>
             <th scope="col" className="px-6 py-3 text-neutral-900 font-serif text-xs md:text-xl font-bold">Name</th>

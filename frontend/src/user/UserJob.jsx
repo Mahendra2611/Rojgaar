@@ -6,6 +6,7 @@ import { useSelector,useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast,ToastContainer } from 'react-toastify'
 import { handleSavee } from './APIreq'
+import { END_POINT } from '../utils/constants'
 const UserJob = () => {
     const dispatch = useDispatch();
     const {filter} = useParams();
@@ -39,7 +40,7 @@ const UserJob = () => {
     const getJobs = async()=>{
        // console.log("get job called")
         try {
-           const response =  await fetch("https://rojgaar-wm0j.onrender.com/job/get",{
+           const response =  await fetch(`${END_POINT}/job/get`,{
             method:"GET",
             credentials:"include",
            })

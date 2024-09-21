@@ -5,6 +5,7 @@ import { toggleLoader } from '../redux/loaderSlice';
 import { addUser } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../components/Loader';
+import { END_POINT } from '../utils/constants';
 const EditAdminProfile= () => {
     const userData = useSelector((state)=>state.user.user)
     const loader = useSelector((state)=>state.loader.loader)
@@ -58,7 +59,7 @@ const navigate = useNavigate();
         try {
           dispatch(toggleLoader(true));
           //console.log("request send")
-            const response = await fetch("https://rojgaar-wm0j.onrender.com/user/profile/update", {
+            const response = await fetch(`${END_POINT}/user/profile/update`, {
                 method: "POST",
                 credentials: "include",
                 body: formData
@@ -85,47 +86,50 @@ const navigate = useNavigate();
     
       return loader ? <Loader/>:(
         
-        <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-lg">
+        <div className="p-6 max-w-lg mx-auto  text-white bg-[#0f172a]  rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-6">Edit Profile</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-700">Photo URL</label>
-              <input
-                type="file"
-                name="photo"
-               
-                onChange={handleFileChange}
-                className="w-full p-2 border rounded"
-              />
-              <p className='text-xs text-red-500'>*Add image only if you want to update it </p>
-            </div>
-            <div>
-              <label className="block text-gray-700">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={user.name}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700">Phone</label>
-              <input
-                type="text"
-                name="phone"
-                value={user.phone}
-                onChange={handleChange}
-                className="w-full p-2 border rounded"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full p-2 bg-blue-500 text-white rounded"
-            >
-              Save Changes
-            </button>
-          </form>
+          <form onSubmit={handleSubmit} className="space-y-4 text-white">
+  <div>
+    <label className="block text-xs md:text-[16px] text-lime-500">Photo URL</label>
+    <input
+      type="file"
+      name="photo"
+      onChange={handleFileChange}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+    <p className='text-xs md:text-[12px] text-red-500'>*Add image only if you want to update it</p>
+  </div>
+
+  <div>
+    <label className="block text-xs md:text-[16px] text-lime-500">Name</label>
+    <input
+      type="text"
+      name="name"
+      value={user.name}
+      onChange={handleChange}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+  </div>
+
+  <div>
+    <label className="block text-xs md:text-[16px] text-lime-500">Phone</label>
+    <input
+      type="text"
+      name="phone"
+      value={user.phone}
+      onChange={handleChange}
+      className="w-full h-8 md:h-10 p-2 text-xs my-1 md:text-[16px] border rounded bg-[#213155] text-white"
+    />
+  </div>
+
+  <button
+    type="submit"
+    className="w-full h-8 md:h-10 p-2 bg-blue-500 text-white rounded"
+  >
+    Save Changes
+  </button>
+</form>
+
           <ToastContainer
 position="top-right"
 autoClose={2000}

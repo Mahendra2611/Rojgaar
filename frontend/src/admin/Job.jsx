@@ -9,7 +9,7 @@ import { addJob ,deleteJobb} from '../redux/JobSlice';
 import { toast } from 'react-toastify';
 import DeleteConfirmation from './DeleteConfirmation';
 import { CustomButtonGreen } from '../components/CustomButton';
-
+import { END_POINT } from '../utils/constants';
 const Job = () => {
     const [inp,setInp] = useState("");
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ console.log(filterData)
       try {
         dispatch(toggleLoader(true));
          
-        const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/getadminjobs`, {
+        const response = await fetch(`${END_POINT}/job/getadminjobs`, {
             method: "GET",
             credentials: "include",
             headers:{
@@ -71,7 +71,7 @@ console.log(filterData)
     const deleteJob = async(id,index) => {
      
       try {
-         const response = await fetch(`https://rojgaar-wm0j.onrender.com/job/deletejob/${id}`,{
+         const response = await fetch(`${END_POINT}/job/deletejob/${id}`,{
              method:"DELETE",
              credentials:"include"
          })
@@ -97,9 +97,9 @@ console.log(filterData)
       setisModal(false);
      }
     useEffect(()=>{
-      if(jobData?.length === 0){
+     
         getData();
-      }
+      
     },[])
   return loader?<Loader/>:(
     <div className='space-y-5'>
