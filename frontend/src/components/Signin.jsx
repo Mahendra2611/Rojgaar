@@ -7,6 +7,7 @@ import { toggleLoader } from "../redux/loaderSlice";
 import { addUser } from "../redux/userSlice"; 
 import { verify } from "../hooks/verify";
 import Loader from "./Loader";
+import { END_POINT } from '../utils/constants';
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +37,7 @@ const Signin = () => {
 //console.log(userData)
       dispatch(toggleLoader(true));
 
-      const response = await fetch("http://localhost:3000/user/login", {
+      const response = await fetch(`${END_POINT}/user/login`, {
         method: "POST",
         credentials: "include",
         headers: {
