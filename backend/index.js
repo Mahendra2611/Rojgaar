@@ -11,7 +11,7 @@ import cors from "cors";
 // import { verificationEmail } from "./utils/verificationEmail.js";
 dotenv.config()
 const corsOptions = {
-    origin: "https://rojgaar-mpv.onrender.com",
+    origin: "http://localhost:5173",
     methods: ["POST", "GET","DELETE"],
     credentials: true
   };

@@ -1,6 +1,6 @@
 import { Company } from "../models/company.model.js";
 export const registerCompany = async(req,res)=>{
-    console.log("register company ")
+    //console.log("register company ")
     const { name, description, website, location } = req.body;
     if (!name || !description || !website ||!location ) {
         return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
@@ -8,7 +8,7 @@ export const registerCompany = async(req,res)=>{
         })
     }
     const file = req.file;
-    console.log(file)
+    //console.log(file)
     const userId = req.userId
     try {
         // const company = await Company.findOne({userId:userId});
@@ -53,12 +53,12 @@ export const getCompany = async(req,res)=>{
 try {
     const userId = req.userId;
     const company = await Company.find({userId:userId},{userId:0});
-    console.log(company)
+   // console.log(company)
     return res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
         companies:company
     })
 } catch (error) {
-    console.log(error);
+    //console.log(error);
     return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).json({
         message: "Server Error"
     })

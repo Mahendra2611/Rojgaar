@@ -73,7 +73,7 @@ export const login = async (req, res) => {
     //console.log(email)
     try {
         const user = await User.findOne({ email });
-        console.log(user)
+        //console.log(user)
         if(!user){
             return res.status(400).json({
                 message: "User doesn't exist",
@@ -121,7 +121,7 @@ export const login = async (req, res) => {
                 user: user
             });
     } catch (error) {
-        console.log(error)
+        //console.log(error)
         return res.status(500).json({
             message: "user log in failed"
         })

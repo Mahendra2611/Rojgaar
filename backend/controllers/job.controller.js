@@ -74,7 +74,7 @@ try {
 export const getAdminJobs = async(req,res)=>{
    try {
     const adminId = req.userId;
-    console.log("get admin")
+   // console.log("get admin")
     if(!adminId){
         return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
             message: "Admin Id required",
@@ -92,7 +92,7 @@ export const getAdminJobs = async(req,res)=>{
         select:"status"
     })
     .sort({ createdAt: -1 });
-    console.log(job)
+   // console.log(job)
     if (!job) {
         return res.status(Number(process.env.NOT_FOUND_STATUS_CODE)||404).json({
             message: "Jobs not found.",
@@ -105,7 +105,7 @@ export const getAdminJobs = async(req,res)=>{
         success: true
     })
    } catch (error) {
-    console.log(error)
+    //console.log(error)
     return res.status(Number(process.env.SERVER_ERROR_STATUS_CODE)||500).josn({
         message:"Server Error"
     })
