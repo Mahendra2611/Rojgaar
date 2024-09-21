@@ -29,10 +29,10 @@ app.use("/savelater",saveRouter)
 const PORT = process.env.PORT || 3000
 const server = app.listen(PORT,()=>{
    connectDB();
-    //console.log(`Server Running on PORT ${PORT}`)
+    console.log(`Server Running on PORT ${PORT}`)
 })
 process.on('uncaughtException', (error) => {
-  //console.error('Uncaught Exception:', error);
+  console.error('Uncaught Exception:', error);
 
   server.close(() => {
       //console.log('Server shutting down due to uncaught exception');
@@ -44,7 +44,7 @@ process.on('uncaughtException', (error) => {
   }, 5000);
 });
 process.on('unhandledRejection',(error)=>{
-  //console.log('unhandledRejection : ',error)
+  console.log('unhandledRejection : ',error)
   server.close(()=>{
     process.exit(1)
   })
