@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        enum:['student','recruiter'],
+        enum:['student','recruiter','admin'],
         required:true,
     },
     profile:{
@@ -31,7 +31,9 @@ const userSchema = new mongoose.Schema({
         profilePhoto:{
             type:String,
             default:"",
-        }
+        },
+        profilePhotoPublicId:{type:String},
+        resumePublicId:{type:String}
     }
 
 },{timestamps:true})

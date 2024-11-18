@@ -16,7 +16,7 @@ export const loginSchema = {
         notEmpty:true,
         isString:true,
         matches:{
-            options:/^student$|^recruiter$/
+            options:/^student$|^recruiter$|^admin$/
         }
     }
 }

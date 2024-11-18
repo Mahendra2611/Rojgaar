@@ -7,12 +7,13 @@ import companyRoute from "./routes/company.route.js"
 import applicationRouter from "./routes/application.route.js"
 import cookieParser from "cookie-parser";
 import saveRouter from "./routes/saveLater.route.js"
+import adminJobRoute from "./routes/adminJob.route.js"
 import cors from "cors";
 // import { verificationEmail } from "./utils/verificationEmail.js";
 dotenv.config()
 const corsOptions = {
     origin: "http://localhost:5173",
-    methods: ["POST", "GET","DELETE"],
+    methods: ["POST", "GET","DELETE","PUT"],
     credentials: true
   };
 const app = express();
@@ -25,11 +26,12 @@ app.use("/company",companyRoute)
 app.use("/job",jobRouter)
 app.use("/application",applicationRouter)
 app.use("/savelater",saveRouter)
+app.use("/adminJob",adminJobRoute)
 // app.get("/email",verificationEmail)
 const PORT = process.env.PORT || 3000
 const server = app.listen(PORT,()=>{
    connectDB();
-    //console.log(`Server Running on PORT ${PORT}`)
+    //yconsole.log(`Server Running on PORT ${PORT}`)
 })
 process.on('uncaughtException', (error) => {
   //console.error('Uncaught Exception:', error);

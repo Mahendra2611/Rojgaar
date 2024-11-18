@@ -11,8 +11,9 @@ export const postSaveLater = async(req,res)=>{
                }
            )
         }
+        //update result has the value before creating the new document in it
        const updateResult = await SaveLater.findOneAndUpdate({user:userId},{$addToSet:{savedJob:jobId}},{upsert:true})
-       //console.log(updateResult)
+       console.log(updateResult)
        if(updateResult.savedJob.includes(jobId)){
         return res.status(Number(process.env.CLIENT_ERROR_STATUS_CODE)||400).json({
             message:"Already Saved",

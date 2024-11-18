@@ -145,9 +145,12 @@ export const logout = (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-    
+   
       const { fullName, phoneNumber, bio, skills } = req.body;
-  
+      const userId = req.userId;
+      //console.log(userId)
+    const user = await User.findOne({_id:userId})
+   // console.log(user)
       if (!fullName || !phoneNumber ) {
         return res.status(Number(process.env.INPUT_FIELD_HTTPS_CODE)||400).json({
           message: 'Input fields are not correct',
@@ -171,50 +174,35 @@ export const updateProfile = async (req, res) => {
       if(skills){
         DataToBeUpdated["profile.skills"] = skills
       }
-      
-      const uploadPromises = [];
-     // console.log(req.files.profilePhoto)
-      //console.log(req.files.resume)
-      // if (req.files.profilePhoto) {
-      //   const photoUploadPromise = new Promise((resolve, reject) => {
-      //     const profilePhotoPath = req.files.profilePhoto[0].path;
-      //     resolve(profilePhotoPath); 
-      //   });
-  
-      //   uploadPromises.push(photoUploadPromise);
-      // }
-  
-     
-      // if (req.files.resume) {
-      //   const resumeUploadPromise = new Promise((resolve, reject) => {
-      //     const resumePath = req.files.resume[0].path;
-      //     const resumeOriginalName = req.files.resume[0].originalname;
-      //     resolve({ resumePath, resumeOriginalName }); 
-      //   });
-      //   uploadPromises.push(resumeUploadPromise);
-      // }
-      // const uploadResults = await Promise.all(uploadPromises);
-  
-      // uploadResults.forEach((result, index) => {
-      //   if (index === 0 && req.files.profilePhoto) {
-      //     DataToBeUpdated["profile.profilePhoto"] = result;
-      //   } else if (index === 1 && req.files.resume) {
-      //     DataToBeUpdated["profile.resume"] = result.resumePath;
-      //     DataToBeUpdated["profile.resumeOriginalName"] = result.resumeOriginalName;
-      //   }
-      // });
-      if(req.files.profilePhoto){
-            DataToBeUpdated["profile.profilePhoto"] = req.files.profilePhoto[0].path;
+      //console.log("deleted")
+     //console.log(user.profile.profilePhotoPublicId)
+    // console.log("deleted2")
+      if (req.files.profilePhoto) {
+        if (user.profile && user.profile.profilePhoto) {
+           // console.log("deleted")
+          const oldProfilePhotoId = user.profile.profilePhotoPublicId; // A store the public ID in the DB
+          await cloudinary.uploader.destroy(oldProfilePhotoId);
+        }
+        DataToBeUpdated["profile.profilePhoto"] = req.files.profilePhoto[0].path;
+        DataToBeUpdated["profile.profilePhotoPublicId"] = req.files.profilePhoto[0].filename; // Save the new public ID
       }
-      if(req.files.resume){
+     
+      // Check and delete existing resume
+      if (req.files.resume) {
+        if (user.profile && user.profile.resumePublicId) {
+          const oldResumeId = user.profile.resumePublicId; //  store the public ID in the DB
+          await cloudinary.uploader.destroy(oldResumeId);
+        }
         DataToBeUpdated["profile.resume"] = req.files.resume[0].path;
-          DataToBeUpdated["profile.resumeOriginalName"] =  req.files.resume[0].originalname;
-        
+        DataToBeUpdated["profile.resumeOriginalName"] = req.files.resume[0].originalname;
+        DataToBeUpdated["profile.resumePublicId"] = req.files.resume[0].filename; // Save the new public ID
       }
       //console.log("update data")
       //console.log(DataToBeUpdated)
+     
       const id = req.userId;
       await User.updateOne({ _id: id }, {$set:DataToBeUpdated});
+     
       const updatedUser = await User.findOne({ _id: id }, { _id:0,password: 0 });
       res.status(Number(process.env.SUCCESS_STATUS_CODE)||200).json({
         message: 'User updated successfully',

@@ -5,10 +5,15 @@ import cloudinary from '../utils/cloudinaryConfig.js';
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'profile_uploads', 
-    allowed_formats: ['jpg', 'png', 'pdf'], 
-  },
+  params: async (req, file) => {
+    const isPDF = file.mimetype === 'application/pdf';
+    return {
+      folder: 'profile_uploads',
+      allowed_formats: ['jpg', 'png', 'pdf'],
+      resource_type: isPDF ? 'raw' : 'image', 
+      
+    };
+  }
 });
 
 export const upload = multer({ 
