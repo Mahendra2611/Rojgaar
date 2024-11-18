@@ -5,9 +5,9 @@ import { calculateDays } from "../utils/calculateDays";
 const JobCard = ({data,handleRemove}) => {
     const navigate= useNavigate()
   return (
-    <div className="flex justify-center items-center  bg-[#1e293b]   ">
+    <div className="flex justify-center items-center     ">
       
-      <div className="w-full max-w-md p-6  border border-white/20   bg-[#1e293b] shadow-[inset_10px_10px_10px_-1px_#32435f,inset_-10px_-10px_10px_-1px_#131c2b] rounded-lg ">
+      <div className="w-full max-w-md p-6  border border-white/20    shadow-[inset_10px_10px_10px_-1px_#4d4e4e,inset_-10px_-10px_10px_-1px_#1f2020] rounded-lg ">
         {/* Company Logo */}
         <h1 className="text-white pb-2 -pt-2">{`${calculateDays(data?.createdAt)} days ago`}</h1>
         <div className="flex items-center mb-4">

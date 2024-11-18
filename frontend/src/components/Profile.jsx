@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify';
 import JobAppliedTable from './JobAppliedTable';
 import { END_POINT } from '../utils/constants';
-
+import { Pattern1 } from './Background';
 
 const Profile = () => {
   const user = useSelector((state)=>state.user.user)
@@ -54,9 +54,9 @@ const getJobsApplied = async()=>{
     getJobsApplied();
   },[])
   return  (
-   <div className='mx-2'>
+   <div className='mx-2 my-2'>
      <div
-      className="p-6 max-w-4xl mx-auto rounded-lg  bg-[#62c48e] shadow-[inset_10px_10px_10px_-1px_#418d63,inset_-10px_-10px_10px_-1px_#8af1b9]">
+      className="p-6 max-w-4xl mx-auto rounded-lg   shadow-[inset_10px_10px_10px_-1px_#4d4e4e,inset_-10px_-10px_10px_-1px_#1f2020]">
       <div className="flex justify-end">
         <button onClick={handleEdit} className="text-white bg-[#3968ad] shadow-[inset_5px_5px_5px_-1px_#264d88,inset_-5px_-5px_5px_-1px_#5c88ca rounded-xl py-1 md:py-2 px-2 md:px-4">
           Edit
@@ -68,13 +68,13 @@ const getJobsApplied = async()=>{
           src={user?.profile?.profilePhoto}
           alt="U"
         />
-        <h2 className="text-xl md:text-2xl font-bold pb-1 mt-4">{user?.fullName}</h2>
-        <p className="text-gray-700 pb-1">{user?.role}</p>
-        <p className="text-gray-700 pb-1">{user?.email}</p>
-        <p className="text-gray-700">{user?.phoneNumber}</p>
+        <h2 className="text-xl md:text-2xl font-bold pb-1 mt-4 text-blue-400">{user?.fullName}</h2>
+        <p className="text-gray-100 pb-1">{user?.role}</p>
+        <p className="text-gray-100 pb-1">{user?.email}</p>
+        <p className="text-gray-100">{user?.phoneNumber}</p>
       </div>
       <div className="mt-6">
-        <h3 className="text-lg md:text-xl font-semibold">Skills</h3>
+        <h3 className="text-lg md:text-xl font-semibold text-blue-400">Skills</h3>
         <div className="flex flex-wrap gap-2 mt-2">
           {user?.profile?.skills.map((skill, index) => (
             <span
@@ -87,12 +87,12 @@ const getJobsApplied = async()=>{
         </div>
       </div>
       <div className="mt-6">
-        <h3 className="text-lg md:text-xl font-semibold">Resume</h3>
+        <h3 className="text-lg md:text-xl font-semibold text-blue-400">Resume</h3>
         <a
           href={user?.profile?.resume}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-red-800 text-xl md:text-xl hover:underline"
+          className="text-white text-xl md:text-xl hover:underline"
         >
          { user?.profile?.resumeOriginalName}
         </a>

@@ -1,12 +1,15 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import { Outlet } from 'react-router-dom'
+import { Pattern1 } from './components/Background'
 const Parent = () => {
   return (
-    <div className='min-h-screen w-screen overflow-hidden'>
-      <Navbar/>
-      <Outlet/>
+   <Pattern1>
+     <div className='min-h-screen w-full '>
+     <Navbar className="w-full" />
+     <Outlet className="w-full" />
     </div>
+   </Pattern1>
   )
 }
 

@@ -4,10 +4,12 @@ import { handleRemovee } from './APIreq';
 import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify';
 import { END_POINT } from '../utils/constants';
+import Loader from '../components/Loader';
 const SavedJob = () => {
     const [job,setJob] = useState([]);
     const jobs = useSelector((state)=>state.job.job)
     const intern = useSelector((state)=>state.intern.intern)
+    const [load,setLoad] = useState(false);
    //console.log(job)
     //console.log(jobs)
     const filterData1 = jobs?.filter((jobs)=>job.includes(jobs._id))
@@ -27,6 +29,7 @@ const SavedJob = () => {
        }
         }
     const getSaved = async()=>{
+      setLoad(true);
         try {
             const response =  await fetch(`${END_POINT}/savelater/get`,{
               method:"GET",
@@ -47,11 +50,14 @@ const SavedJob = () => {
             toast.error("Something went wrong")
            // console.log(error)
           }
+          finally{
+            setLoad(false);
+          }
     }
     useEffect(()=>{
         getSaved();
     },[])
-  return job.length===0?(<h1 className='text-white flex justify-center items-center text-xl md:text-5xl font-bold'>No Job saved</h1>):(
+  return load?<Loader/>:(job.length===0?(<h1 className='text-white flex justify-center items-center text-xl md:text-5xl font-bold'>No Job saved</h1>):(
     <div className='space-y-5 m-auto'>
     <div className='flex justify-center items-center px-10 text-black'>
        
@@ -76,7 +82,7 @@ theme="light"
 
 />
       </div>
-  )
+  ))
 }
 
 export default SavedJob

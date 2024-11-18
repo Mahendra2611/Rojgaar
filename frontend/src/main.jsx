@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')).render(
  
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <div className='global-bg-gradient min-h-screen'>
+      <div className=' min-h-screen w-full'>
       <App  />
       </div>
     </PersistGate>

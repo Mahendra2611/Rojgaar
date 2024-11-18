@@ -8,10 +8,13 @@ import { toast,ToastContainer } from 'react-toastify'
 import { addIntern } from '../redux/InternSlice'
 import { handleSavee } from './APIreq'
 import { END_POINT } from '../utils/constants'
+import Loader from '../components/Loader'
+import Input from '../components/Input'
 const InternShip = () => {
     const dispatch = useDispatch();
     const {filter} = useParams();
     const jobsData = useSelector((state)=>state.intern.intern);
+    const [load,setLoad] = useState(false);
    // console.log(jobsData)
     const [inp,setInp] = useState(filter||"");
     const filterData = useMemo(()=>{
@@ -39,6 +42,7 @@ const InternShip = () => {
       },500);
     const getJobs = async()=>{
        // console.log("get job called")
+       setLoad(true);
         try {
            const response =  await fetch(`${END_POINT}/job/get`,{
             method:"GET",
@@ -50,14 +54,17 @@ const InternShip = () => {
         } catch (error) {
             toast.error("Something went wrong")
         }
+        finally{
+          setLoad(false);
+        }
     }
     useEffect(()=>{
         getJobs();  
     },[])
-  return (
+  return load? <Loader/> :(
     <div className='space-y-5 m-auto'>
     <div className='flex justify-center items-center px-10 text-black'>
-       <input 
+       {/* <input 
        type='text'
        placeholder='search by name'
        className='px-4 py-2 text-[14px] sm:text-[16px] w-auto rounded-xl text-black '
@@ -65,8 +72,10 @@ const InternShip = () => {
         handleChange(e.target.value)
       console.log(e.target.value)
       }}
-       />
-       
+       /> */}
+        <Input  placeholder='search by name or title' onChange={(e)=>{
+        handleChange(e.target.value)
+      }}/>
       </div>
       <div className='flex px-5 flex-wrap justify-center items-center gap-10'>
      {filterData?.length>0 ? (filterData.map((job,index)=>(

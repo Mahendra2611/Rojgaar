@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { ToastContainer,toast } from 'react-toastify';
 import {CustomButtonBlue,CustomButtonGreen} from "../components/CustomButton"
 import { END_POINT } from '../utils/constants';
+import { Pattern3 ,Pattern1} from '../components/Background';
 const JobDetails = () => {
     const {id} = useParams();
     const [job,setJob] = useState({});
@@ -66,8 +67,9 @@ const JobDetails = () => {
        getDetails();
     },[])
     return (
-        <div className="min-h-screen mx-3 sm:mx-0 bg-bg-[#1e293b] flex justify-center items-center py-10">
-          <div className="bg-[#1e293b] shadow-[inset_10px_10px_10px_-1px_#32435f,inset_-10px_-10px_10px_-1px_#131c2b] border border-gray-500/30 rounded-lg p-8 max-w-4xl w-full ">
+      <Pattern1>
+        <div className="min-h-screen px-3 sm:mx-0  flex justify-center items-center py-10">
+          <div className="bg-bg-[#4d4e4e] shadow-[inset_10px_10px_10px_-1px_#4d4e4e,inset_-10px_-10px_10px_-1px_#1f2020] border border-gray-500/30 rounded-lg p-8 max-w-4xl w-full ">
             {/* Company Info */}
             <div className="flex items-center mb-6">
               <img
@@ -118,6 +120,7 @@ const JobDetails = () => {
               </button>)}
             </div>
           </div>
+          
           <ToastContainer
 position="top-right"
 autoClose={2000}
@@ -132,6 +135,7 @@ theme="light"
 
 />
         </div>
+        </Pattern1>
       );
 }
 

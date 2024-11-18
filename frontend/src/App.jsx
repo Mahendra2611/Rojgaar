@@ -27,6 +27,10 @@ import InternShip from "./user/InternShip"
 import Error from "./components/Error"
 import SavedJob from "./user/SavedJob"
 import CommingSoon from "./components/CommingSoon"
+import Home2 from "./admin2/home2"
+import AdminProtected2 from "./admin2/AdminProtected2"
+import AdminJobCreate from "./admin2/AdminJobCreate"
+import AdminJobUpdate from "./admin2/AdminJobUpdate"
 function App() {
 const AppRouter = createBrowserRouter([
   {
@@ -145,6 +149,23 @@ const AppRouter = createBrowserRouter([
   path:"/logout",
   element:<Logout/>,
   errorElement:<Error/>,
+},
+{
+  path:"/admin2/home",
+  element:<AdminProtected2><Home2/></AdminProtected2>,
+  errorElement:<Error/>
+  
+},
+{
+  path:"/admin2/jobCreate",
+  element:<AdminProtected2><AdminJobCreate/></AdminProtected2>,
+  errorElement:<Error/>
+  
+},
+{
+  path:"/Admin2/jobUpdate/:id",
+  element:<AdminProtected2><AdminJobUpdate/></AdminProtected2>,
+  errorElement:<Error/>
 }
 ])
   return (

@@ -3,9 +3,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer components {
     .global-bg-gradient {
-      @apply bg-gradient-to-br from-[#0f172a] to-[#1e293b];
+      @apply bg-gradient-to-br from-[#0f172b] to-[#1e293b];
     }
     .hide-scrollbar {
       scrollbar-width: none; /* Firefox */

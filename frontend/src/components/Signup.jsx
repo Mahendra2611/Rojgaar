@@ -26,6 +26,7 @@ const Signup = () => {
         //console.log("handleSubmit")
         event.preventDefault();
        // console.log(refs.password.current.value)
+      //  mooment
         try {
           const [isEmail,isPassword,isPhone] =  verify(refs.email.current.value,refs.password.current.value,refs.phone.current.value);
         if(!isEmail||!isPassword || !isPhone){

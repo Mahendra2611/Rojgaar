@@ -3,7 +3,7 @@ import { ToastContainer,toast } from 'react-toastify'
 import { END_POINT } from '../utils/constants';
 import { removeUser } from '../redux/userSlice';
 import { useDispatch } from 'react-redux';
-
+import { Pattern1 } from './Background';
 const Logout = () => {
     const [msg,setMsg] = useState("");
     const dispatch = useDispatch();
@@ -35,7 +35,8 @@ const Logout = () => {
         getLogOut();
     },[])
   return (
-    <div>
+   <Pattern1>
+     <div>
         <h1 className='text-green-500  font-serif flex justify-center items-center w-screen h-screen font-semibold md:font-extrabold text-xl md:text-5xl'>{msg}</h1>
        <ToastContainer
 position="top-right"
@@ -52,6 +53,7 @@ theme="light"
 
 />
     </div>
+   </Pattern1>
   )
 }
 

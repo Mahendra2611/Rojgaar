@@ -2,12 +2,14 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { calculateDays } from "../utils/calculateDays";
+import {Pattern3,Pattern1} from "../components/Background";
+import Button from "../components/Button";
 const JobCard = ({data,handleSave}) => {
     const navigate= useNavigate()
   return (
-    <div className="flex justify-center items-center  bg-[#1e293b]   ">
-      
-      <div className="w-full max-w-md p-6  border border-white/20   bg-[#1e293b] shadow-[inset_10px_10px_10px_-1px_#32435f,inset_-10px_-10px_10px_-1px_#131c2b] rounded-lg ">
+    <Pattern1>
+    <div className="flex justify-center items-center    ">
+      <div className="w-full max-w-md p-6  border border-white/20    shadow-[inset_10px_10px_10px_-1px_#4d4e4e,inset_-10px_-10px_10px_-1px_#1f2020] rounded-lg ">
         {/* Company Logo */}
         <h1 className="text-white pb-2 -pt-2">{`${calculateDays(data?.createdAt)} days ago`}</h1>
         <div className="flex items-center mb-4">
@@ -32,15 +34,16 @@ const JobCard = ({data,handleSave}) => {
 
         {/* Buttons */}
         <div className="flex justify-between gap-x-2 mt-6">
-          <button onClick={()=>{navigate(`/user/jobs/deatils/${data?._id}`)}} className="px-4 py-2 text-sm text-white bg-[#3474b1] shadow-[inset_5px_5px_5px_-1px_#22588a,inset_-5px_-5px_5px_-1px_#4b91d3]  rounded-lg">
+          <Button onClick={()=>{navigate(`/user/jobs/deatils/${data?._id}`)}}>
             View Details
-          </button>
-          <button onClick={()=>{handleSave(data?._id)}} className="px-4 py-2 text-sm text-blue-600 bg-[#d0d3d8] shadow-[inset_5px_5px_5px_-1px_#a9adb4,inset_-5px_-5px_5px_-1px_#e6e8eb]  rounded-lg">
+          </Button>
+          <Button onClick={()=>{handleSave(data?._id)}} >
             Save for Later
-          </button>
+          </Button>
         </div>
       </div>
     </div>
+    </Pattern1>
   );
 };
 

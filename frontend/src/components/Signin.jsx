@@ -7,7 +7,7 @@ import { toggleLoader } from "../redux/loaderSlice";
 import { addUser } from "../redux/userSlice"; 
 import { verify } from "../hooks/verify";
 import Loader from "./Loader";
-import { END_POINT } from '../utils/constants';
+import { END_POINT } from "../utils/constants";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -55,7 +55,11 @@ const Signin = () => {
           navigate("/admin/home");
         } else if (data.user.role === "student") {
           navigate("/");
-        } else {
+        } 
+        else if(data.user.role === "admin"){
+          navigate("/admin2/home");
+        }
+        else {
           toast.error(data.message);
         }
       } else {
@@ -119,6 +123,7 @@ const Signin = () => {
               </option>
               <option value="student">Student</option>
               <option value="recruiter">Recruiter</option>
+              <option value="admin">Admin</option>
             </select>
           </div>
           <div className="text-white text-[14px] cursor-pointer underline md:text-[16px] flex justify-between items-center">
