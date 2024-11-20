@@ -42,8 +42,12 @@ const UserJob = () => {
   }
   const getJobs = async () => {
     // console.log("get job called")
+    let timeOutId;
     setLoader(true);
     try {
+      timeOutId = setTimeout(()=>{
+        toast.warning("Data is taking too long to load. Please refresh the page.")
+      },60000)
       const response = await fetch(`${END_POINT}/adminJob/get`, {
         method: "GET",
         credentials: "include",
@@ -52,10 +56,13 @@ const UserJob = () => {
       console.log(data)
       dispatch(addJob(data.jobData));
     } catch (error) {
+      console.log(error)
       toast.error("Something went wrong")
     }
     finally {
+      clearTimeout(timeOutId)
       setLoader(false);
+      
     }
   }
 

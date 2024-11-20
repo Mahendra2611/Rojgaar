@@ -1,5 +1,5 @@
 import express from "express";
-import connectDB from "./utils/connectDB.js";
+//import connectDB from "./utils/connectDB.js";
 import dotenv from "dotenv"
 import userRoute from "./routes/user.route.js"
 import jobRouter from "./routes/job.route.js"
@@ -8,11 +8,15 @@ import applicationRouter from "./routes/application.route.js"
 import cookieParser from "cookie-parser";
 import saveRouter from "./routes/saveLater.route.js"
 import adminJobRoute from "./routes/adminJob.route.js"
+import forgotPwd from "./routes/forgotPwd.route.js"
 import cors from "cors";
+import mongoose from "mongoose";
 // import { verificationEmail } from "./utils/verificationEmail.js";
+// origin: "https://rojgaar-mpv.onrender.com",
+// origin: "http://localhost:5173",
 dotenv.config()
 const corsOptions = {
-    origin: "https://rojgaar-mpv.onrender.com",
+  origin: "https://rojgaar-mpv.onrender.com",
     methods: ["POST", "GET","DELETE","PUT"],
     credentials: true
   };
@@ -27,11 +31,35 @@ app.use("/job",jobRouter)
 app.use("/application",applicationRouter)
 app.use("/savelater",saveRouter)
 app.use("/adminJob",adminJobRoute)
+app.use("/forgotPwd",forgotPwd)
 // app.get("/email",verificationEmail)
+let dbConnected = false;
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(process.env.DATABASE_URL, {
+           
+        });
+        dbConnected = true;
+        console.log("Database connected");
+    } catch (error) {
+        console.error("Database connection failed:", error);
+    }
+};
+
+connectDB();
+
+app.get("https://rojgaar-mpv.onrender.com/*", (req, res, next) => {
+    if (!dbConnected) {
+        return res.status(503).send("<h1>Website is starting up. Please wait...</h1>");
+    }
+    next();
+});
+
 const PORT = process.env.PORT || 3000
 const server = app.listen(PORT,()=>{
-   connectDB();
-    //yconsole.log(`Server Running on PORT ${PORT}`)
+  
+    console.log(`Server Running on PORT ${PORT}`)
 })
 process.on('uncaughtException', (error) => {
   //console.error('Uncaught Exception:', error);

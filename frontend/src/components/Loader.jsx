@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-
+import { Pattern1 } from "./Background";
 const Loader = () => {
   return (
+    <Pattern1>
+    <div className="min-h-screen flex justify-center items-center">
     <StyledWrapper>
      <div className="w-[100vw] h-[100vh]bg-gradient-to-br from-[#0f172a] to-[#1e293b]">
      <div className="loader" />
      </div>
     </StyledWrapper>
+    </div>
+    </Pattern1>
   );
 };
 

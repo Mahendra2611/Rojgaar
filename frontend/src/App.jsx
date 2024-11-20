@@ -31,6 +31,9 @@ import Home2 from "./admin2/Home2"
 import AdminProtected2 from "./admin2/AdminProtected2"
 import AdminJobCreate from "./admin2/AdminJobCreate"
 import AdminJobUpdate from "./admin2/AdminJobUpdate"
+import ForgotPassword from "./components/ForgotPassword"
+import OTPVerification from "./components/OTPVerification"
+import UpdatePwd from "./components/UpdatePwd"
 function App() {
 const AppRouter = createBrowserRouter([
   {
@@ -142,6 +145,23 @@ const AppRouter = createBrowserRouter([
   errorElement:<Error/>,
 },
 {
+  path:"/forgotpassword",
+  element:<ForgotPassword/>,
+  errorElement:<Error/>
+},
+{
+  path:"/OTP_Verfication",
+  element:<OTPVerification/>,
+  errorElement:<Error/>
+
+},
+{
+  path:"/updatePwd",
+  element:<UpdatePwd/>,
+  errorElement:<Error/>
+
+},
+{
   path:"/error",
   element:<Error/>
 },
@@ -166,7 +186,8 @@ const AppRouter = createBrowserRouter([
   path:"/Admin2/jobUpdate/:id",
   element:<AdminProtected2><AdminJobUpdate/></AdminProtected2>,
   errorElement:<Error/>
-}
+},
+
 ])
   return (
    <RouterProvider router={AppRouter}/>

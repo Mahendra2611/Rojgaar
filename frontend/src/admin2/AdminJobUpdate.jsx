@@ -116,7 +116,7 @@ getData();
 
   return load? <Loader /> : (
 <Pattern1>
-    <div className="p-6 max-w-lg mx-auto text-white bg-[#0f172a] rounded-lg shadow-lg">
+    <div className="p-6 max-w-lg h-full mx-auto text-white bg-[#0f172a] rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6">Create Job</h2>
       <form onSubmit={handleSubmit} className="space-y-4 text-white">
         <div>

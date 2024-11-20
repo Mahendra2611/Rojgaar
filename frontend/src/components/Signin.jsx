@@ -128,7 +128,7 @@ const Signin = () => {
           </div>
           <div className="text-white text-[14px] cursor-pointer underline md:text-[16px] flex justify-between items-center">
             <h1 onClick={()=>{navigate("/signup")}}>Sign up</h1>
-            <h1>Forget password</h1>
+            <h1 onClick={()=>navigate("/forgotpassword")}>Forget password</h1>
           </div>
         </div>
         <div className="mt-4">
