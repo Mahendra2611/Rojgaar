@@ -4,36 +4,43 @@ import Signup from "./components/Signup"
 import Signin from "./components/Signin"
 import Home from "./components/Home"
 import Loader from "./components/Loader"
-
+import React, { Suspense } from "react"
 import EditProfile from "./components/EditProfile"
-import EditAdminProfile from "./admin/EditAdminProfile"
+ 
+const EditAdminProfile = React.lazy(()=>import("./admin/EditAdminProfile"))
 import Profile from "./components/Profile"
-import AdminProfile from "./admin/AdminProfile"
+const AdminProfile = React.lazy(()=>import("./admin/AdminProfile"))
 import Parent from "./Parent"
-import Companies from "./admin/Companies"
-import CompanyCreate from "./admin/CompanyCreate"
-import CompanyUpdate from "./admin/CompanyUpdate"
-import ApplicantTable from "./admin/ApplicantTable"
-import Job from "./admin/Job"
-import JobCreate from "./admin/JobCreate"
-import JobUpdate from "./admin/JobUpdate"
+const Companies = React.lazy(() => import('./admin/Companies'));
+const CompanyCreate = React.lazy(() => import('./admin/CompanyCreate'));
+const CompanyUpdate = React.lazy(() => import('./admin/CompanyUpdate'));
+const ApplicantTable = React.lazy(() => import('./admin/ApplicantTable'));
+const Job = React.lazy(() => import('./admin/Job'));
+const JobCreate = React.lazy(() => import('./admin/JobCreate'));
+const JobUpdate = React.lazy(() => import('./admin/JobUpdate'));
+const RecruiterLandingPage = React.lazy(() => import('./admin/RecruiterLandingPage'));
 import UserJob from "./user/UserJob"
 import JobDetails from "./user/JobDetails"
 import AllJobs from "./user/AllJobs"
-import AdminProtected from "./admin/AdminProtected"
+
+const AdminProtected = React.lazy(()=>import("./admin/AdminProtected"))
 import Logout from "./components/Logout"
-import RecruiterLandingPage from "./admin/RecruiterLandingPage"
-import InternShip from "./user/InternShip"
+
+
 import Error from "./components/Error"
 import SavedJob from "./user/SavedJob"
 import CommingSoon from "./components/CommingSoon"
-import Home2 from "./admin2/Home2"
-import AdminProtected2 from "./admin2/AdminProtected2"
-import AdminJobCreate from "./admin2/AdminJobCreate"
-import AdminJobUpdate from "./admin2/AdminJobUpdate"
+const Home2 = React.lazy(() => import('./admin2/Home2'));
+const AdminProtected2 = React.lazy(() => import('./admin2/AdminProtected2'));
+const AdminJobCreate = React.lazy(() => import('./admin2/AdminJobCreate'));
+const AdminJobUpdate = React.lazy(() => import('./admin2/AdminJobUpdate'));
+
 import ForgotPassword from "./components/ForgotPassword"
 import OTPVerification from "./components/OTPVerification"
 import UpdatePwd from "./components/UpdatePwd"
+// import InternShip from "./user/InternShip"
+ const  InternShip = React.lazy(()=>import("./user/InternShip"))
+
 function App() {
 const AppRouter = createBrowserRouter([
   {
@@ -53,13 +60,14 @@ const AppRouter = createBrowserRouter([
     },
     {
       path:"admin/home",
-      element:<AdminProtected><RecruiterLandingPage/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><RecruiterLandingPage/></AdminProtected></Suspense>),
       errorElement:<Error/>,
     },
 
     {
       path:"adminprofile",
-      element:<AdminProtected><AdminProfile/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><AdminProfile/></AdminProtected></Suspense>),
+      
       errorElement:<Error/>,
     },
     {
@@ -69,42 +77,50 @@ const AppRouter = createBrowserRouter([
     },
     {
       path:"editadminprofile",
-      element:<AdminProtected><EditAdminProfile/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><EditAdminProfile/></AdminProtected></Suspense>),
+      
       errorElement:<Error/>,
     },
     {
       path:"company",
-      element:<AdminProtected><Companies/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><Companies/></AdminProtected></Suspense>),
+      
       errorElement:<Error/>,
     },
     {
       path:"/company/create",
-      element:<AdminProtected><CompanyCreate/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><CompanyCreate/></AdminProtected></Suspense>),
+     
       errorElement:<Error/>,
     },
     {
       path:"/company/update/:id",
-      element:<AdminProtected><CompanyUpdate/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><CompanyUpdate/></AdminProtected></Suspense>),
+     
       errorElement:<Error/>,
     },
     {
       path:"job",
-      element:<AdminProtected><Job/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><Job/></AdminProtected></Suspense>),
+     
       errorElement:<Error/>,
     },
     {
       path:"/job/create",
-      element:<AdminProtected><JobCreate/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><JobCreate/></AdminProtected></Suspense>),
+     
       errorElement:<Error/>,
     },
     {
       path:"/job/update/:id",
-      element:<AdminProtected><JobUpdate/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><JobUpdate/></AdminProtected></Suspense>),
+     
       errorElement:<Error/>,
     },
     {
       path:"/job/applicant/:jobId",
-      element:<AdminProtected><ApplicantTable/></AdminProtected>,
+      element:(<Suspense fallback={<Loader/>}><AdminProtected><ApplicantTable/></AdminProtected></Suspense>),
+     
       errorElement:<Error/>,
     },
     {
@@ -119,7 +135,7 @@ const AppRouter = createBrowserRouter([
     },
     {
       path:"user/intern",
-      element:<InternShip/>,
+      element:(<Suspense fallback={<Loader/>}><InternShip/>,</Suspense>),
       errorElement:<Error/>,
     },
     {
@@ -172,19 +188,20 @@ const AppRouter = createBrowserRouter([
 },
 {
   path:"/admin2/home",
-  element:<AdminProtected2><Home2/></AdminProtected2>,
+  element:(<Suspense fallback={<Loader/>}><AdminProtected2><Home2/></AdminProtected2></Suspense>),
   errorElement:<Error/>
   
 },
 {
   path:"/admin2/jobCreate",
-  element:<AdminProtected2><AdminJobCreate/></AdminProtected2>,
+  element:(<Suspense fallback={<Loader/>}><AdminProtected2><AdminJobCreate/></AdminProtected2></Suspense>),
+ 
   errorElement:<Error/>
   
 },
 {
   path:"/Admin2/jobUpdate/:id",
-  element:<AdminProtected2><AdminJobUpdate/></AdminProtected2>,
+  element:(<Suspense fallback={<Loader/>}><AdminProtected2><AdminJobUpdate/></AdminProtected2></Suspense>),
   errorElement:<Error/>
 },
 
