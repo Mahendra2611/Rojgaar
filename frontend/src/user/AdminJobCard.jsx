@@ -1,53 +1,67 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { calculateDays } from "../utils/calculateDays";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {Pattern3,Pattern1} from "../components/Background";
+import { Pattern1 } from "../components/Background";
 import Button from "../components/Button";
-const AdminJobCard = ({data,handleSave}) => {
-   
-  return (
-    <Pattern1>
-    <div className="flex justify-center items-center     ">
-      <div className="w-full max-w-md p-6  border border-white/20    shadow-[inset_10px_10px_10px_-1px_#4d4e4e,inset_-10px_-10px_10px_-1px_#1f2020] rounded-lg ">
-        {/* Company Logo */}
-        <p className="text-white text-right">{calculateDays(data.createdAt)} Days</p>
-        <div className="flex items-center mb-4">
-          <div className="ml-4">
-            <h2 className="text-white text-xl font-bold">{data?.name}</h2>
-            <p className="text-gray-300 text-sm">{data?.location}</p>
-          </div>
-        </div>
+import { calculateDays } from "../utils/calculateDays";
 
-        {/* Job Details */}
-        <div className="mt-4">
-          <h3 className="text-white text-lg font-semibold">{data?.role}</h3>
-          <p className="text-white text-lg mb-2"> {data?.mode}</p>
-          <p className="text-white text-lg mb-2">{data?.jobType}</p>
-        </div>
-        <div className="mb-6">
-              <h3 className=" text-lg md:text-xl text-white font-semibold mb-2">Requirements</h3>
-              <ul className=" text-orange-300 flex flex-wrap gap-2 md:gap-5">
-                {data?.skills?.map((req, index) => (
-                  <li key={index} className='border-2 border-white/20 py-1 text-xs md:text-sm md:py-1 px-2 md:px-2 rounded-xl bg-[#1e293b] shadow-[inset_5px_5px_5px_-1px_#32435f,inset_-5px_-5px_5px_-1px_#131c2b] ' >{req}</li>
-                ))}
-              </ul>
-            </div>
-        {/* Buttons */}
-        <div className="flex justify-center items-center gap-x-2 mt-6">
-        <Button>
-<Link to={data.link}> Apply</Link>
-</Button>
-{/* <Button onClick={()=>{handleSave(data?._id)}} >
- Save for Later
-</Button> */}
+const AdminJobCard = ({ data, handleSave }) => {
+  const [showAll, setShowAll] = useState(false);
+  const visibleSkills = 4; // Number of skills shown initially
+
+  return (
+    
+      <div className="flex justify-center items-center">
+        <div className="w-[260px] sm:w-[320px] h-[380px] border border-gray-600 shadow-lg bg-[#1A1B2F] 
+                        rounded-xl p-5 flex flex-col justify-between">
+          
+          {/* Days Posted */}
+          <p className="text-gray-400 text-right text-sm">
+            {calculateDays(data.createdAt)} Days Ago
+          </p>
+
+          {/* Job Info */}
+          <div>
+            <h2 className="text-[#F8F9FA] text-2xl font-bold">{data?.name}</h2>
+            <p className="text-[#ADB5BD] text-sm">{data?.location}</p>
+            <h3 className="text-[#F8F9FA] text-lg font-semibold mt-2">{data?.role}</h3>
+            <p className="text-[#ADB5BD] text-sm">
+              {data?.mode} | {data?.jobType}
+            </p>
+          </div>
+
+          {/* Requirements */}
+          <div >
+            <h3 className="text-lg text-[#F8F9FA] font-semibold">Requirements</h3>
+            <ul className="text-[#56CFE1] flex flex-wrap mt-1 gap-2">
+              {data?.skills?.slice(0, showAll ? data?.skills.length : visibleSkills).map((req, index) => (
+                <li key={index} className="border border-[#56CFE1] py-1 px-2 text-xs rounded-lg bg-[#2B2D42]">
+                  {req}
+                </li>
+              ))}
+            </ul>
+
+            {/* Show More Button */}
+            {data?.skills?.length > visibleSkills && (
+              <button onClick={() => setShowAll(!showAll)} className="mt-2 text-[#4DA3FF] text-sm underline">
+                {showAll ? "Show Less" : "More"}
+              </button>
+            )}
+          </div>
+
+          {/* Apply & Save Buttons */}
+          <div className="flex justify-around gap-x-2 items-center mt-4">
+            <Button className="bg-[#28A745] hover:bg-[#218838] text-white">
+              <Link to={data.link}>Apply</Link>
+            </Button>
+            <Button onClick={() => handleSave(data?._id)} className="bg-[#FF9F1C] hover:bg-[#E08E00] text-white">
+              Save for Later
+            </Button>
+          </div>
+
         </div>
       </div>
-    </div>
-    </Pattern1>
+    
   );
 };
 
 export default AdminJobCard;
-

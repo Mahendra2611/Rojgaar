@@ -122,7 +122,7 @@ const Signin = () => {
                 Select your role
               </option>
               <option value="student">Student</option>
-              <option value="recruiter">Recruiter</option>
+              {/* <option value="admin">recruiter</option> */}
               <option value="admin">Admin</option>
             </select>
           </div>

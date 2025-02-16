@@ -151,7 +151,7 @@ const Signup = () => {
                 Select your role
               </option>
               <option value="student" >Student</option>
-              <option value="recruiter">Recruiter</option>
+             
             </select>
           </div>
         </div>

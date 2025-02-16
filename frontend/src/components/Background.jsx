@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export const Pattern1 = ({children}) => {
+export const Pattern1 = ({ children }) => {
   return (
     <StyledWrapper1>
       <div className="container">{children}</div>
@@ -10,31 +10,18 @@ export const Pattern1 = ({children}) => {
 };
 
 const StyledWrapper1 = styled.div`
-  .container {
-  max-width: 100%;
-  height: 100%;
-  --s: 200px; /* control the size */
-  --c1: #1d1d1d;
-  --c2: #4e4f51;
-  --c3: #3c3c3c;
-
-  background: repeating-conic-gradient(
-        from 30deg,
-        #0000 0 120deg,
-        var(--c3) 0 180deg
-      )
-      calc(0.5 * var(--s)) calc(0.5 * var(--s) * 0.577),
-    repeating-conic-gradient(
-      from 30deg,
-      var(--c1) 0 60deg,
-      var(--c2) 0 120deg,
-      var(--c3) 0 180deg
-    );
-  background-size: var(--s) calc(var(--s) * 0.577);
-}
-
+  min-height: 100vh;
+  background: 
+    linear-gradient(135deg, #0a0f24, #3a1c5c, #5a0e41), 
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.3), transparent 70%);
+  
+  background-blend-mode: overlay; /* Blend the gradients */
+  color: #e0e0e0; /* Default text color */
 `;
 
+// display: flex;
+// justify-content: center;
+// align-items: center;
 
 export const Pattern2 = ({children}) => {
   return (

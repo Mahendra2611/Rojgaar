@@ -7,8 +7,10 @@ import { useParams } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import { handleSavee } from './APIreq'
 import { END_POINT } from '../utils/constants'
+import { Search } from "lucide-react"; // Import search icon
 import Input from '../components/Input'
 import Loader from "../components/Loader"
+
 const UserJob = () => {
   const dispatch = useDispatch();
   const { filter } = useParams();
@@ -18,9 +20,11 @@ const UserJob = () => {
   //console.log(filter)
   // Search function
   const filterData = useMemo(() => {
-    return jobsData?.length > 0 && jobsData?.filter((job) => ((job?.name?.toLowerCase().replace(/\s+/g, '').includes(inp?.toLowerCase())) || inp?.trim() === "" || (job?.role?.toLowerCase().replace(/\s+/g, '').includes(inp?.toLowerCase()))))
+    //console.log(jobsData)
+    return jobsData?.length > 0 &&   jobsData?.filter((job) => ((job.jobType == "Full Time")&&((job?.name?.toLowerCase().replace(/\s+/g, '').includes(inp?.toLowerCase())) || inp?.trim() === "" || (job?.role?.toLowerCase().replace(/\s+/g, '').includes(inp?.toLowerCase())))))
   }, [inp, jobsData])
-  console.log(filterData)
+ // console.log(filterData)
+
   function debounce(func, time) {
     let timeOutId;
     return (...args) => {
@@ -53,10 +57,10 @@ const UserJob = () => {
         credentials: "include",
       })
       const data = await response.json();
-      console.log(data)
+     // console.log(data)
       dispatch(addJob(data.jobData));
     } catch (error) {
-      console.log(error)
+      //console.log(error)
       toast.error("Something went wrong")
     }
     finally {
@@ -72,19 +76,24 @@ const UserJob = () => {
 
   return load ? <Loader /> : (
     <div className='pb-5 m-auto w-full hide-scrollbar '>
-      <div className='flex justify-center items-center px-10 text-black'>
-        {/* <input 
-       type='text'
+      <div className='flex justify-center items-center px-10 py-5 text-black'>
       
-       className='px-4 py-2 text-[14px] sm:text-[16px] w-auto rounded-xl text-black '
-       onChange={(e)=>{
-        handleChange(e.target.value)
-      //console.log(e.target.value)
-      }}
-       /> */}
-        <Input placeholder='search by name or title' onChange={(e) => {
+      <input
+  type="text"
+  placeholder="Search for jobs..."
+  className="w-full sm:w-[300px] px-4 py-2 text-[16px] sm:text-[18px] rounded-lg  
+             border-2 border-transparent bg-[#3862a5] text-[#f0f2f3] focus:border-[#4DA3FF]
+             focus:ring-2 focus:ring-[#4DA3FF] transition-all duration-300 
+             shadow-md hover:shadow-lg outline-none 
+             placeholder-[#94A3B8] hover:bg-[#24344D]"
+  onChange={(e) => handleChange(e.target.value)}
+/>
+
+
+        {/* <Input placeholder='search by name or title' onChange={(e) => {
           handleChange(e.target.value)
-        }} />
+        }} /> */}
+       
       </div>
       <div className='flex px-5 flex-wrap  justify-center items-center gap-10 w-full  hide-scrollbar'>
         {(filterData?.length > 0) ? (filterData.map((job, index) => (

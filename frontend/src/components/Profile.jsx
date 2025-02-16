@@ -4,23 +4,15 @@ import { useSelector } from 'react-redux';
 import { ToastContainer,toast } from 'react-toastify';
 import JobAppliedTable from './JobAppliedTable';
 import { END_POINT } from '../utils/constants';
-import { Pattern1 } from './Background';
-
+import Popup from './Popup';
 const Profile = () => {
   const user = useSelector((state)=>state.user.user)
   const [jobsData,setJobsData] = useState()
   const [loged,setLoged]= useState(true);
-  //console.log(user)
-  // const user = {
-  //   photo: 'https://via.placeholder.com/150', // Placeholder image; replace with actual image URL
-  //   name: 'John Doe',
-  //   role: 'Software Engineer',
-  //   email: 'john.doe@example.com',
-  //   phone: '+1234567890',
-  //   skills: ['JavaScript', 'React', 'Node.js', 'Tailwind CSS'],
-  //   resume: '/path/to/resume.pdf', // Replace with the actual path to the resume PDF
-  // };
-const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+
+
 const handleEdit = ()=>{
    if(Object.keys(user).length === 0){
     toast.error("You are not logged in")
@@ -30,30 +22,14 @@ const handleEdit = ()=>{
    }
     
 }
-const getJobsApplied = async()=>{
-  try {
-    const response = await fetch(`${END_POINT}/application/get`,{
-      method:"GET",
-      credentials:"include"
-    })
-    const data  = await response.json();
-   // console.log(data)
-   if(response.ok){
-    setJobsData(data.application)
+
+ 
+ useEffect(()=>{
+  if(Object.keys(user).length === 0){
+    setShowPopup(true);
    }
-   else{
-    toast.error(data.message)
-    //console.log(data.message)
-   }
-  } catch (error) {
-   // console.log(error)
-    toast.error("Something went wrong")
-  }
-  }
-  useEffect(()=>{
-    getJobsApplied();
-  },[])
-  return  (
+ },[])
+  return   showPopup ? <Popup onClose={() => setShowPopup(false)} />:(
    <div className='mx-2 my-2'>
      <div
       className="p-6 max-w-4xl mx-auto rounded-lg   shadow-[inset_10px_10px_10px_-1px_#4d4e4e,inset_-10px_-10px_10px_-1px_#1f2020]">
@@ -98,9 +74,7 @@ const getJobsApplied = async()=>{
         </a>
       </div>
     </div>
-    <div className=' max-w-4xl mx-auto rounded-lg shadow-lg mt-10'>
-<JobAppliedTable job={jobsData}/>
-    </div>
+   
     <ToastContainer
 position="top-right"
 autoClose={2000}

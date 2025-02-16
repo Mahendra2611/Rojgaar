@@ -34,9 +34,9 @@ const JobCard = ({data,handleSave}) => {
 
         {/* Buttons */}
         <div className="flex justify-between gap-x-2 mt-6">
-          <Button onClick={()=>{navigate(`/user/jobs/deatils/${data?._id}`)}}>
-            View Details
-          </Button>
+          <Button>
+                        <Link to={data.link}>Apply</Link>
+                      </Button>
           <Button onClick={()=>{handleSave(data?._id)}} >
             Save for Later
           </Button>
